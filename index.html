@@ -79,8 +79,8 @@
   .expand-arrow.open { transform: rotate(180deg); }
   .realloc-panel { overflow: hidden; max-height: 0; transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1); background: #f8fafc; border-top: 1px solid transparent; }
   .realloc-panel.open { max-height: 800px; border-top-color: var(--border); }
-  .realloc-inner { padding: 22px 24px 24px; }
-  .realloc-title { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: #15803d; margin-bottom: 16px; }
+  .realloc-inner { padding: 22px 24px 24px; width: 100%; }
+  .realloc-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: #15803d; margin-bottom: 16px; white-space: nowrap; text-align: center; }
   .time-stack { display: flex; height: 30px; border-radius: 3px; overflow: hidden; gap: 2px; margin-bottom: 10px; }
   .time-segment { display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; overflow: hidden; white-space: nowrap; padding: 0 5px; }
   .seg-auto { background: #fecaca; color: #991b1b; }
@@ -114,7 +114,7 @@
 
 <header>
   <h1>AI Disruption in <em>Local Government</em></h1>
-  <p>By department: &middot; AI software tools &middot; disruption risk &middot; time freed &middot; how to reinvest it</p>
+  <p>By department: &middot; <span style="color:#4338ca;font-weight:600;">AI software tools</span> &middot; disruption risk &middot; <span style="color:#15803d;font-weight:600;">time freed</span> &middot; how to reinvest it</p>
 </header>
 
 <div class="summary-bar">
@@ -139,7 +139,7 @@
   </div>
   <div class="divider"></div>
   <div style="flex:1;min-width:180px;">
-    <div style="font-size:1rem;color:#4b5563;line-height:1.6;">Click a department to expand <strong style="color:#4338ca">AI software tools</strong> and role cards. Click <strong style="color:#15803d">Better Use of Time</strong> on any role card.</div>
+    <div style="font-size:1rem;color:#4b5563;line-height:1.6;">Click a department to learn what <span style="color:#4338ca;font-weight:600;">AI tools</span> are available, the roles at risk, and <span style="color:#15803d;font-weight:600;">how the freed time should be invested</span>.</div>
   </div>
 </div>
 
@@ -668,10 +668,10 @@ function buildApp() {
           '<div class="card-reason">' + r.reason + '</div>' +
           '<div style="font-family:IBM Plex Mono,monospace;font-size:0.95rem;letter-spacing:0.08em;text-transform:uppercase;color:#4338ca;margin-top:10px;margin-bottom:4px;">AI can do:</div>' +
           '<div class="ai-tags">' + tagsHTML + '</div>' +
-          '<div class="realloc-inner" style="margin-top:16px;">' +
-            '<div class="realloc-title">Where the freed time should go</div>' +
+        '</div>' +
+        '<div style="width:100%;padding:22px 24px 24px;box-sizing:border-box;border-top:1px solid var(--border);">' +
+            '<div class="realloc-title">How the freed time should be invested</div>' +
             '<div class="realloc-tasks">' + tasksHTML + '</div>' +
-          '</div>' +
         '</div>' +
       '</div>';
     }).join('');
