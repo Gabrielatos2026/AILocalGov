@@ -666,28 +666,15 @@ function buildApp() {
       }).join('');
 
       return '<div class="card ' + r.risk + '">' +
-        '<div class="card-main" onclick="toggleCard(' + ci + ')">' +
+        '<div class="card-main">' +
           '<div class="card-header"><div class="card-title">' + r.title + '</div><div class="risk-badge ' + r.risk + '">' + r.risk + ' risk</div></div>' +
           '<div class="bar-container"><div class="bar-label"><span>Disruption exposure</span><span>' + r.score + '%</span></div><div class="bar-track"><div class="bar-fill" style="width:' + r.score + '%"></div></div></div>' +
+          '<div style="font-family:IBM Plex Mono,monospace;font-size:0.95rem;color:#4338ca;font-weight:600;margin:10px 0 6px;">' + r.tA + '% of tasks in this role could be performed by AI</div>' +
           '<div class="card-reason">' + r.reason + '</div>' +
-          '<div class="at-risk-line">' + atRiskTxt + '</div>' +
           '<div style="font-family:IBM Plex Mono,monospace;font-size:0.95rem;letter-spacing:0.08em;text-transform:uppercase;color:#4338ca;margin-top:10px;margin-bottom:4px;">AI can do:</div>' +
           '<div class="ai-tags">' + tagsHTML + '</div>' +
-        '</div>' +
-        '<div class="expand-btn" onclick="toggleCard(' + ci + ')"><span>&#8627; Better Use of Time</span><span class="expand-arrow" id="ca-' + ci + '">&#9662;</span></div>' +
-        '<div class="realloc-panel" id="cp-' + ci + '">' +
-          '<div class="realloc-inner">' +
+          '<div class="realloc-inner" style="margin-top:16px;">' +
             '<div class="realloc-title">Where the freed time should go</div>' +
-            '<div class="time-stack">' +
-              '<div class="time-segment seg-auto" style="width:' + r.tA + '%">' + r.tA + '%</div>' +
-              '<div class="time-segment seg-oversight" style="width:' + r.tO + '%">' + r.tO + '%</div>' +
-              '<div class="time-segment seg-reinvest" style="width:' + r.tR + '%">' + r.tR + '%</div>' +
-            '</div>' +
-            '<div class="time-legend">' +
-              '<div class="tleg-item"><div class="tleg-dot" style="background:#fca5a5"></div>Automated away &mdash; AI handles independently (' + r.tA + '%)</div>' +
-              '<div class="tleg-item"><div class="tleg-dot" style="background:#a5b4fc"></div>AI oversight &mdash; reviewing &amp; correcting outputs (' + r.tO + '%)</div>' +
-              '<div class="tleg-item"><div class="tleg-dot" style="background:#6ee7b7"></div>High-value reinvestment &mdash; freed for better work (' + r.tR + '%)</div>' +
-            '</div>' +
             '<div class="realloc-tasks">' + tasksHTML + '</div>' +
           '</div>' +
         '</div>' +
