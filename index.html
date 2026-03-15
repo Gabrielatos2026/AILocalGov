@@ -17,9 +17,9 @@
   header { text-align: center; margin-bottom: 56px; }
   header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem,5vw,3.6rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 12px; }
   header h1 em { font-style: italic; color: var(--accent); }
-  header p { color: var(--muted); font-size: 1rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.05em; }
+  header p { color: var(--muted); font-size: 1.2rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.05em; }
   .legend { display: flex; gap: 20px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
-  .legend-item { display: flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; }
   .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
   .dept-section { max-width: 1300px; margin: 0 auto 4px; border: 1px solid var(--border); overflow: hidden; }
   .dept-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; background: var(--surface); cursor: pointer; user-select: none; transition: background 0.2s; gap: 16px; }
@@ -27,10 +27,10 @@
   .dept-left { display: flex; align-items: center; gap: 14px; }
   .dept-icon { font-size: 1.5rem; width: 38px; text-align: center; flex-shrink: 0; }
   .dept-name { font-family: 'DM Serif Display', serif; font-size: 1.4rem; line-height: 1.1; }
-  .dept-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--muted); letter-spacing: 0.06em; margin-top: 3px; }
+  .dept-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.92rem; color: #4b5563; letter-spacing: 0.06em; margin-top: 3px; }
   .dept-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
   .dept-risk-pills { display: flex; gap: 6px; }
-  .pill { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; padding: 3px 9px; border-radius: 2px; letter-spacing: 0.06em; }
+  .pill { font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; padding: 3px 9px; border-radius: 2px; letter-spacing: 0.06em; }
   .pill.high { background: rgba(239,68,68,0.15); color: var(--high); border: 1px solid rgba(239,68,68,0.25); }
   .pill.medium { background: rgba(245,158,11,0.15); color: var(--medium); border: 1px solid rgba(245,158,11,0.25); }
   .pill.low { background: rgba(34,197,94,0.15); color: var(--low); border: 1px solid rgba(34,197,94,0.25); }
@@ -40,12 +40,12 @@
   .dept-body.open { max-height: 6000px; border-top-color: var(--border); }
   /* Software tools panel */
   .software-bar { padding: 20px 22px; background: #eef2ff; border-bottom: 1px solid var(--border); }
-  .software-bar-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: #4338ca; margin-bottom: 14px; }
+  .software-bar-title { font-family: 'IBM Plex Mono', monospace; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; color: #4338ca; margin-bottom: 14px; }
   .software-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 10px; }
   .software-card { background: #ffffff; border: 1px solid #c7d2fe; border-radius: 3px; padding: 12px 14px; }
-  .software-name { font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 5px; }
-  .software-type { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; padding: 2px 6px; background: #e0e7ff; color: #4338ca; border-radius: 2px; letter-spacing: 0.04em; margin-left: 6px; }
-  .software-desc { font-size: 0.875rem; color: #4b5563; line-height: 1.55; }
+  .software-name { font-size: 1.05rem; font-weight: 500; color: var(--text); margin-bottom: 5px; }
+  .software-type { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; padding: 2px 6px; background: #e0e7ff; color: #4338ca; border-radius: 2px; letter-spacing: 0.04em; margin-left: 6px; }
+  .software-desc { font-size: 0.975rem; color: #4b5563; line-height: 1.55; }
   /* Role grid */
   .role-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px,1fr)); gap: 2px; padding: 2px; }
   .card { background: #ffffff; position: relative; overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--border); }
@@ -57,22 +57,22 @@
   .card-main:hover { background: #f9fafb; }
   .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; gap: 10px; }
   .card-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; line-height: 1.2; }
-  .risk-badge { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 8px; border-radius: 2px; white-space: nowrap; flex-shrink: 0; }
+  .risk-badge { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 8px; border-radius: 2px; white-space: nowrap; flex-shrink: 0; }
   .risk-badge.high { background: rgba(239,68,68,0.15); color: var(--high); border: 1px solid rgba(239,68,68,0.3); }
   .risk-badge.medium { background: rgba(245,158,11,0.15); color: var(--medium); border: 1px solid rgba(245,158,11,0.3); }
   .risk-badge.low { background: rgba(34,197,94,0.15); color: var(--low); border: 1px solid rgba(34,197,94,0.3); }
   .bar-container { margin-bottom: 14px; }
-  .bar-label { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.82rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+  .bar-label { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.95rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
   .bar-track { height: 5px; background: var(--border); border-radius: 2px; overflow: hidden; }
   .bar-fill { height: 100%; border-radius: 2px; }
   .card.high .bar-fill { background: var(--high); }
   .card.medium .bar-fill { background: var(--medium); }
   .card.low .bar-fill { background: var(--low); }
   .card-reason { font-size: 0.9rem; color: #374151; line-height: 1.6; margin-bottom: 12px; }
-  .at-risk-line { font-size: 0.84rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+  .at-risk-line { font-size: 0.85rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
   .at-risk-line strong { color: var(--text); font-family: 'IBM Plex Sans', sans-serif; font-size: 0.875rem; display: block; margin-bottom: 3px; }
   .ai-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-  .ai-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 4px 8px; background: #e0e7ff; border: 1px solid #c7d2fe; color: #4338ca; border-radius: 2px; }
+  .ai-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; padding: 4px 8px; background: #e0e7ff; border: 1px solid #c7d2fe; color: #4338ca; border-radius: 2px; }
   .expand-btn { display: flex; align-items: center; justify-content: space-between; padding: 11px 24px; background: #f0fdf4; border-top: 1px solid #bbf7d0; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; letter-spacing: 0.07em; text-transform: uppercase; color: #15803d; transition: background 0.15s; user-select: none; }
   .expand-btn:hover { background: #dcfce7; }
   .expand-arrow { transition: transform 0.3s; }
@@ -87,7 +87,7 @@
   .seg-oversight { background: #c7d2fe; color: #3730a3; }
   .seg-reinvest { background: #bbf7d0; color: #166534; }
   .time-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
-  .tleg-item { display: flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: #374151; }
+  .tleg-item { display: flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: #374151; }
   .tleg-dot { width: 8px; height: 8px; border-radius: 1px; flex-shrink: 0; }
   .realloc-tasks { display: flex; flex-direction: column; gap: 13px; }
   .task-row { display: flex; gap: 12px; }
@@ -97,7 +97,7 @@
   .summary-bar { max-width: 1300px; margin: 0 auto 40px; background: #f8f9fa; border: 1px solid var(--border); padding: 18px 28px; display: flex; gap: 36px; align-items: center; flex-wrap: wrap; }
   .summary-stat { text-align: center; }
   .summary-num { font-family: 'DM Serif Display', serif; font-size: 2.2rem; line-height: 1; margin-bottom: 3px; }
-  .summary-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .summary-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
   .summary-num.high { color: var(--high); }
   .summary-num.medium { color: var(--medium); }
   .summary-num.low { color: var(--low); }
@@ -114,7 +114,7 @@
 
 <header>
   <h1>AI Disruption in <em>Local Government</em></h1>
-  <p>By department &middot; AI software tools &middot; disruption risk &middot; time freed &middot; how to reinvest it</p>
+  <p>By department: &middot; AI software tools &middot; disruption risk &middot; time freed &middot; how to reinvest it</p>
 </header>
 
 <div class="summary-bar">
@@ -139,7 +139,7 @@
   </div>
   <div class="divider"></div>
   <div style="flex:1;min-width:180px;">
-    <div style="font-size:0.8rem;color:#4b5563;line-height:1.6;">Click a department to expand <strong style="color:#4338ca">AI software tools</strong> and role cards. Click <strong style="color:#15803d">Better Use of Time</strong> on any role card.</div>
+    <div style="font-size:1rem;color:#4b5563;line-height:1.6;">Click a department to expand <strong style="color:#4338ca">AI software tools</strong> and role cards. Click <strong style="color:#15803d">Better Use of Time</strong> on any role card.</div>
   </div>
 </div>
 
@@ -257,7 +257,8 @@ var depts = [
         tasks: [
           { icon: "🌱", label: "Employee development & career pathing", desc: "Use AI workforce analytics to identify skill gaps and design upskilling pathways as AI transforms many roles." },
           { icon: "🤝", label: "Employee relations & conflict resolution", desc: "Devote more time to mediation, performance coaching, mental health support, and retention conversations." },
-          { icon: "🎯", label: "Strategic workforce planning", desc: "Partner with department heads to anticipate hiring needs, succession gaps, and the impact of new technologies 2-3 years out." }
+          { icon: "🎯", label: "Strategic workforce planning", desc: "Partner with department heads to anticipate hiring needs, succession gaps, and the impact of new technologies 2-3 years out." },
+          { icon: "🔍", label: "Dedicated and sustained recruitment", desc: "Invest freed time in proactive, relationship-based recruitment — building pipelines before vacancies arise rather than reacting to them." }
         ]
       }
     ]
@@ -271,7 +272,8 @@ var depts = [
       { name: "Salesforce Government Cloud + Einstein", type: "CRM / AI", desc: "AI-powered constituent relationship management with automated case routing, sentiment analysis, and chatbot integration." },
       { name: "AskJacky", type: "AI Chatbot", desc: "Purpose-built government chatbot deployed in Midland TX and other cities. Handles resident queries 24/7 and routes to CRM." },
       { name: "AWS Connect + Amazon Lex", type: "AI Call Center", desc: "Cloud contact center with conversational AI that handles routine calls, routes complex ones, and gives agents real-time suggested responses." },
-      { name: "Quiq", type: "Messaging AI", desc: "Enables government agencies to handle resident inquiries via SMS, WhatsApp, and web chat with AI-assisted responses." }
+      { name: "Quiq", type: "Messaging AI", desc: "Enables government agencies to handle resident inquiries via SMS, WhatsApp, and web chat with AI-assisted responses." },
+      { name: "Threefold.ai", type: "Constituent Engagement AI", desc: "AI platform designed for local government to automate constituent interactions, streamline service delivery, and improve response times across channels." }
     ],
     roles: [
       { title: "311 / Call Center Operator", risk: "high", score: 85,
@@ -657,7 +659,7 @@ function buildApp() {
     // Roles HTML
     var rolesHTML = dept.roles.map(function(r) {
       var ci = cardIdx++;
-      var atRiskTxt = r.atRisk.length ? '<strong>Roles most at risk:</strong> ' + r.atRisk.join(' &middot; ') : '<strong>Role is relatively protected.</strong>';
+      var atRiskTxt = r.atRisk.length ? '<strong>Similar roles most at risk:</strong> ' + r.atRisk.join(' &middot; ') : '<strong>Role is relatively protected.</strong>';
       var tagsHTML = r.aiUses.map(function(t) { return '<span class="ai-tag">' + t + '</span>'; }).join('');
       var tasksHTML = r.tasks.map(function(t) {
         return '<div class="task-row"><div class="task-icon">' + t.icon + '</div><div><div class="task-label">' + t.label + '</div><div class="task-desc">' + t.desc + '</div></div></div>';
@@ -669,6 +671,7 @@ function buildApp() {
           '<div class="bar-container"><div class="bar-label"><span>Disruption exposure</span><span>' + r.score + '%</span></div><div class="bar-track"><div class="bar-fill" style="width:' + r.score + '%"></div></div></div>' +
           '<div class="card-reason">' + r.reason + '</div>' +
           '<div class="at-risk-line">' + atRiskTxt + '</div>' +
+          '<div style="font-family:IBM Plex Mono,monospace;font-size:0.95rem;letter-spacing:0.08em;text-transform:uppercase;color:#4338ca;margin-top:10px;margin-bottom:4px;">AI can do:</div>' +
           '<div class="ai-tags">' + tagsHTML + '</div>' +
         '</div>' +
         '<div class="expand-btn" onclick="toggleCard(' + ci + ')"><span>&#8627; Better Use of Time</span><span class="expand-arrow" id="ca-' + ci + '">&#9662;</span></div>' +
