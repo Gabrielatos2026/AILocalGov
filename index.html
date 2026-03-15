@@ -157,11 +157,7 @@
 <div id="app"></div>
 
 <div class="note">
-  <strong>Methodology note:</strong> Risk ratings are synthesized from the Microsoft Copilot real-world usage study (2025), the Route Fifty / MissionSq AI workforce survey of state and local employees (2025), the Frey-Osborne computerization susceptibility framework, and the Urban Institute's local government AI adoption research. Departments reflect typical city-level government structure. Time bars are illustrative estimates, not precise measurements.<br><br>
-  <strong>Understanding the time bar:</strong><br>
-  <strong style="color:#dc2626">Automated away</strong> &mdash; The portion of a typical workweek that AI can handle entirely on its own, with no human involvement required. These tasks simply disappear from the employee's to-do list: data entry, routine document processing, standard code lookups, and similar repetitive work. This does <em>not</em> mean employees are eliminated &mdash; it means that slice of their day is freed up for other things.<br><br>
-  <strong style="color:#4338ca">AI oversight</strong> &mdash; Time the employee still spends because of the AI: reviewing its outputs, handling exceptions it could not resolve, correcting errors, and ensuring quality. AI is not infallible, and this human check is essential.<br><br>
-  <strong style="color:#15803d">High-value reinvestment</strong> &mdash; Time genuinely freed up and available to redirect toward higher-order work: community engagement, complex judgment, relationship-building, and the activities shown in each card's Better Use of Time panel.
+  <strong>Methodology note:</strong> Risk ratings are synthesized from the Microsoft Copilot real-world usage study (2025), the Route Fifty / MissionSq AI workforce survey of state and local employees (2025), the Frey-Osborne computerization susceptibility framework, and the Urban Institute's local government AI adoption research. Departments reflect typical city-level government structure. Percentage estimates are illustrative, not precise measurements.
 </div>
 
 <script>
@@ -668,7 +664,6 @@ function buildApp() {
       return '<div class="card ' + r.risk + '">' +
         '<div class="card-main">' +
           '<div class="card-header"><div class="card-title">' + r.title + '</div><div class="risk-badge ' + r.risk + '">' + r.risk + ' risk</div></div>' +
-          '<div class="bar-container"><div class="bar-label"><span>Disruption exposure</span><span>' + r.score + '%</span></div><div class="bar-track"><div class="bar-fill" style="width:' + r.score + '%"></div></div></div>' +
           '<div style="font-family:IBM Plex Mono,monospace;font-size:0.95rem;color:#4338ca;font-weight:600;margin:10px 0 6px;">' + r.tA + '% of tasks in this role could be performed by AI</div>' +
           '<div class="card-reason">' + r.reason + '</div>' +
           '<div style="font-family:IBM Plex Mono,monospace;font-size:0.95rem;letter-spacing:0.08em;text-transform:uppercase;color:#4338ca;margin-top:10px;margin-bottom:4px;">AI can do:</div>' +
