@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Disruption in Local Government</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff; --surface: #f8f9fa; --surface2: #f0f2f5;
+    --border: #d1d5db; --text: #111827; --muted: #6b7280;
+    --high: #dc2626; --medium: #d97706; --low: #16a34a;
+    --accent: #4f46e5; --reinvest: #059669;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; min-height: 100vh; padding: 40px 20px 80px; font-size: 16px; }
+  header { text-align: center; margin-bottom: 56px; }
+  header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem,5vw,3.6rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 12px; }
+  header h1 em { font-style: italic; color: var(--accent); }
+  header p { color: var(--muted); font-size: 1.2rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.05em; }
+  .legend { display: flex; gap: 20px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dept-section { max-width: 1300px; margin: 0 auto 4px; border: 1px solid var(--border); overflow: hidden; }
+  .dept-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; background: var(--surface); cursor: pointer; user-select: none; transition: background 0.2s; gap: 16px; }
+  .dept-header:hover { background: var(--surface2); }
+  .dept-left { display: flex; align-items: center; gap: 14px; }
+  .dept-icon { font-size: 1.5rem; width: 38px; text-align: center; flex-shrink: 0; }
+  .dept-name { font-family: 'DM Serif Display', serif; font-size: 1.4rem; line-height: 1.1; }
+  .dept-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.92rem; color: #4b5563; letter-spacing: 0.06em; margin-top: 3px; }
+  .dept-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+  .dept-risk-pills { display: flex; gap: 6px; }
+  .pill { font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; padding: 3px 9px; border-radius: 2px; letter-spacing: 0.06em; }
+  .pill.high { background: rgba(239,68,68,0.15); color: var(--high); border: 1px solid rgba(239,68,68,0.25); }
+  .pill.medium { background: rgba(245,158,11,0.15); color: var(--medium); border: 1px solid rgba(245,158,11,0.25); }
+  .pill.low { background: rgba(34,197,94,0.15); color: var(--low); border: 1px solid rgba(34,197,94,0.25); }
+  .dept-arrow { color: var(--muted); font-size: 1rem; transition: transform 0.3s; }
+  .dept-arrow.open { transform: rotate(180deg); }
+  .dept-body { overflow: hidden; max-height: 0; transition: max-height 0.5s cubic-bezier(0.16,1,0.3,1); background: #f9fafb; border-top: 1px solid transparent; }
+  .dept-body.open { max-height: 6000px; border-top-color: var(--border); }
+  /* Software tools panel */
+  .software-bar { padding: 20px 22px; background: #eef2ff; border-bottom: 1px solid var(--border); }
+  .software-bar-title { font-family: 'IBM Plex Mono', monospace; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; color: #4338ca; margin-bottom: 14px; }
+  .software-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 10px; }
+  .software-card { background: #ffffff; border: 1px solid #c7d2fe; border-radius: 3px; padding: 12px 14px; }
+  .software-name { font-size: 1.05rem; font-weight: 500; color: var(--text); margin-bottom: 5px; }
+  .software-type { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; padding: 2px 6px; background: #e0e7ff; color: #4338ca; border-radius: 2px; letter-spacing: 0.04em; margin-left: 6px; }
+  .software-desc { font-size: 0.975rem; color: #4b5563; line-height: 1.55; }
+  /* Role grid */
+  .role-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px,1fr)); gap: 2px; padding: 2px; }
+  .card { background: #ffffff; position: relative; overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--border); }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.high::before { background: var(--high); }
+  .card.medium::before { background: var(--medium); }
+  .card.low::before { background: var(--low); }
+  .card-main { padding: 22px 24px; cursor: pointer; transition: background 0.15s; flex: 1; }
+  .card-main:hover { background: #f9fafb; }
+  .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; gap: 10px; }
+  .card-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; line-height: 1.2; }
+  .risk-badge { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 8px; border-radius: 2px; white-space: nowrap; flex-shrink: 0; }
+  .risk-badge.high { background: rgba(239,68,68,0.15); color: var(--high); border: 1px solid rgba(239,68,68,0.3); }
+  .risk-badge.medium { background: rgba(245,158,11,0.15); color: var(--medium); border: 1px solid rgba(245,158,11,0.3); }
+  .risk-badge.low { background: rgba(34,197,94,0.15); color: var(--low); border: 1px solid rgba(34,197,94,0.3); }
+  .bar-container { margin-bottom: 14px; }
+  .bar-label { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.95rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+  .bar-track { height: 5px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 2px; }
+  .card.high .bar-fill { background: var(--high); }
+  .card.medium .bar-fill { background: var(--medium); }
+  .card.low .bar-fill { background: var(--low); }
+  .card-reason { font-size: 0.9rem; color: #374151; line-height: 1.6; margin-bottom: 12px; }
+  .at-risk-line { font-size: 0.85rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+  .at-risk-line strong { color: var(--text); font-family: 'IBM Plex Sans', sans-serif; font-size: 0.875rem; display: block; margin-bottom: 3px; }
+  .ai-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .ai-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; padding: 4px 8px; background: #e0e7ff; border: 1px solid #c7d2fe; color: #4338ca; border-radius: 2px; }
+  .expand-btn { display: flex; align-items: center; justify-content: space-between; padding: 11px 24px; background: #f0fdf4; border-top: 1px solid #bbf7d0; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; letter-spacing: 0.07em; text-transform: uppercase; color: #15803d; transition: background 0.15s; user-select: none; }
+  .expand-btn:hover { background: #dcfce7; }
+  .expand-arrow { transition: transform 0.3s; }
+  .expand-arrow.open { transform: rotate(180deg); }
+  .realloc-panel { overflow: hidden; max-height: 0; transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1); background: #f8fafc; border-top: 1px solid transparent; }
+  .realloc-panel.open { max-height: 800px; border-top-color: var(--border); }
+  .realloc-inner { padding: 22px 24px 24px; }
+  .realloc-title { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: #15803d; margin-bottom: 16px; }
+  .time-stack { display: flex; height: 30px; border-radius: 3px; overflow: hidden; gap: 2px; margin-bottom: 10px; }
+  .time-segment { display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; overflow: hidden; white-space: nowrap; padding: 0 5px; }
+  .seg-auto { background: #fecaca; color: #991b1b; }
+  .seg-oversight { background: #c7d2fe; color: #3730a3; }
+  .seg-reinvest { background: #bbf7d0; color: #166534; }
+  .time-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+  .tleg-item { display: flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: #374151; }
+  .tleg-dot { width: 8px; height: 8px; border-radius: 1px; flex-shrink: 0; }
+  .realloc-tasks { display: flex; flex-direction: column; gap: 13px; }
+  .task-row { display: flex; gap: 12px; }
+  .task-icon { width: 32px; height: 32px; border-radius: 3px; background: #f0fdf4; border: 1px solid #bbf7d0; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+  .task-label { font-size: 0.92rem; font-weight: 500; color: #111827; margin-bottom: 3px; }
+  .task-desc { font-size: 0.85rem; color: #4b5563; line-height: 1.55; }
+  .summary-bar { max-width: 1300px; margin: 0 auto 40px; background: #f8f9fa; border: 1px solid var(--border); padding: 18px 28px; display: flex; gap: 36px; align-items: center; flex-wrap: wrap; }
+  .summary-stat { text-align: center; }
+  .summary-num { font-family: 'DM Serif Display', serif; font-size: 2.2rem; line-height: 1; margin-bottom: 3px; }
+  .summary-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .summary-num.high { color: var(--high); }
+  .summary-num.medium { color: var(--medium); }
+  .summary-num.low { color: var(--low); }
+  .divider { width: 1px; background: var(--border); height: 42px; }
+  .controls-bar { max-width: 1300px; margin: 0 auto 8px; display: flex; gap: 10px; justify-content: flex-end; }
+  .ctrl-btn { background: #ffffff; border: 1px solid var(--border); color: #374151; padding: 7px 16px; border-radius: 3px; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; transition: all 0.2s; }
+  .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .note { max-width: 1300px; margin: 40px auto 0; padding: 20px 22px; border-left: 3px solid var(--accent); background: #eef2ff; font-size: 0.92rem; color: #374151; line-height: 1.75; }
+  .note strong { color: #111827; }
+  @media (max-width:600px) { .summary-bar { gap: 18px; } .divider { display: none; } .dept-risk-pills { display: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AI Disruption in <em>Local Government</em></h1>
+  <p>By department: &middot; AI software tools &middot; disruption risk &middot; time freed &middot; how to reinvest it</p>
+</header>
+
+<div class="summary-bar">
+  <div class="summary-stat">
+    <div class="summary-num" style="color:#818cf8" id="count-dept">-</div>
+    <div class="summary-label">Departments</div>
+  </div>
+  <div class="divider"></div>
+  <div class="summary-stat">
+    <div class="summary-num high" id="count-high">-</div>
+    <div class="summary-label">High Risk Roles</div>
+  </div>
+  <div class="divider"></div>
+  <div class="summary-stat">
+    <div class="summary-num medium" id="count-medium">-</div>
+    <div class="summary-label">Medium Risk Roles</div>
+  </div>
+  <div class="divider"></div>
+  <div class="summary-stat">
+    <div class="summary-num low" id="count-low">-</div>
+    <div class="summary-label">Lower Risk Roles</div>
+  </div>
+  <div class="divider"></div>
+  <div style="flex:1;min-width:180px;">
+    <div style="font-size:1rem;color:#4b5563;line-height:1.6;">Click a department to expand <strong style="color:#4338ca">AI software tools</strong> and role cards. Click <strong style="color:#15803d">Better Use of Time</strong> on any role card.</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--high)"></div> High disruption risk</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--medium)"></div> Medium disruption risk</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--low)"></div> Lower disruption risk</div>
+</div>
+
+<div class="controls-bar">
+  <button class="ctrl-btn" onclick="expandAll()">Expand All</button>
+  <button class="ctrl-btn" onclick="collapseAll()">Collapse All</button>
+</div>
+
+<div id="app"></div>
+
+<div class="note">
+  <strong>Methodology note:</strong> Risk ratings are synthesized from the Microsoft Copilot real-world usage study (2025), the Route Fifty / MissionSq AI workforce survey of state and local employees (2025), the Frey-Osborne computerization susceptibility framework, and the Urban Institute's local government AI adoption research. Departments reflect typical city-level government structure. Time bars are illustrative estimates, not precise measurements.<br><br>
+  <strong>Understanding the time bar:</strong><br>
+  <strong style="color:#dc2626">Automated away</strong> &mdash; The portion of a typical workweek that AI can handle entirely on its own, with no human involvement required. These tasks simply disappear from the employee's to-do list: data entry, routine document processing, standard code lookups, and similar repetitive work. This does <em>not</em> mean employees are eliminated &mdash; it means that slice of their day is freed up for other things.<br><br>
+  <strong style="color:#4338ca">AI oversight</strong> &mdash; Time the employee still spends because of the AI: reviewing its outputs, handling exceptions it could not resolve, correcting errors, and ensuring quality. AI is not infallible, and this human check is essential.<br><br>
+  <strong style="color:#15803d">High-value reinvestment</strong> &mdash; Time genuinely freed up and available to redirect toward higher-order work: community engagement, complex judgment, relationship-building, and the activities shown in each card's Better Use of Time panel.
+</div>
+
+<script>
+var depts = [
+  {
+    name: "Executive Office",
+    icon: "🏛",
+    desc: "City/County Manager · Director of Communications · Leadership & Strategy",
+    software: [
+      { name: "Microsoft Copilot for Government", type: "Gen AI Assistant", desc: "Drafts reports, summarizes meeting transcripts, and synthesizes cross-department data. Integrated into Microsoft 365 environments most cities already use." },
+      { name: "Socrata / Tyler Data Insights", type: "Performance Analytics", desc: "Powers real-time performance dashboards and KPI tracking across city departments, used by hundreds of US municipalities." },
+      { name: "Otter.ai / Fireflies.ai", type: "Meeting AI", desc: "Automatically transcribes, summarizes, and creates action items from council and leadership meetings." },
+      { name: "Google Gemini for Public Sector", type: "Gen AI Platform", desc: "Government-specific AI suite for document drafting, data analysis, and cross-agency communication with FedRAMP compliance." },
+      { name: "Zencity", type: "Community Sentiment AI", desc: "Analyzes resident sentiment across social media, news, and service requests in real time - helps communications teams understand public mood before a story breaks." },
+      { name: "Jasper / Writer for Government", type: "Content AI", desc: "AI writing platforms that draft press releases, social posts, and public-facing content in a consistent brand voice, with human review before publishing." }
+    ],
+    roles: [
+      { title: "City/County Manager", risk: "low", score: 10,
+        reason: "Executive leadership, political navigation, stakeholder management, and accountability to elected officials are irreducibly human roles.",
+        aiUses: ["Performance dashboards","Report summarization","Meeting transcription"], atRisk: [],
+        tA: 12, tO: 8, tR: 80,
+        tasks: [
+          { icon: "🎯", label: "Strategic leadership & long-horizon planning", desc: "Use AI performance data synthesis to focus on 10-year questions that urgency always crowds out." },
+          { icon: "🌐", label: "Regional & intergovernmental collaboration", desc: "Invest in partnerships with neighboring jurisdictions, state agencies, and nonprofits that create outsized community impact." },
+          { icon: "💼", label: "Talent development & adaptive culture", desc: "Focus on mentoring department heads, addressing morale, and building adaptive capacity for an AI-transformed workforce." }
+        ]
+      },
+      { title: "Director of Communications", risk: "medium", score: 45,
+        reason: "AI can draft content, monitor media, and analyze sentiment at scale. But crisis communications, spokesperson judgment, and public trust are irreducibly human responsibilities.",
+        aiUses: ["Press release drafting","Media monitoring AI","Sentiment analysis","Social media scheduling","Translation AI"],
+        atRisk: ["Communications coordinators","Social media assistants","Press release writers"],
+        tA: 28, tO: 17, tR: 55,
+        tasks: [
+          { icon: "🎙", label: "Crisis communications & narrative leadership", desc: "When a story breaks or a crisis unfolds, lead the response with judgment, empathy, and political awareness that no AI can replicate." },
+          { icon: "🏘", label: "Deep community listening & trust-building", desc: "Use AI sentiment data as a starting point, then invest in genuine two-way dialogue with residents - town halls, neighborhood walks, direct outreach." },
+          { icon: "📣", label: "Strategic storytelling & impact communication", desc: "Shift from producing routine content to crafting compelling narratives about city achievements, equity work, and long-term vision that build civic pride." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Finance & Budget",
+    icon: "💰",
+    desc: "Payroll · Accounts · Budget Analysis · Financial Operations",
+    software: [
+      { name: "Oracle Fusion Cloud Financials", type: "ERP / AI Finance", desc: "AI-powered accounts payable automation, anomaly detection, and budget forecasting built into a government-grade ERP platform." },
+      { name: "Workday Financials", type: "ERP / AI Finance", desc: "Automates payroll, AP/AR, and financial reporting with built-in ML for fraud detection and workforce cost projections." },
+      { name: "MindBridge AI Auditor", type: "Fraud & Audit AI", desc: "Uses machine learning to scan 100% of transactions and flag anomalies for human review. Purpose-built for audit and fraud detection." },
+      { name: "Questica Budget", type: "Budget Planning AI", desc: "Government-specific budget management with scenario modeling and forecasting tools tailored for municipal finance teams." },
+      { name: "IBM Watson for Finance", type: "AI Analytics", desc: "Natural language querying of financial data and automated variance analysis, letting analysts ask questions in plain English." }
+    ],
+    roles: [
+      { title: "Payroll & Accounts Clerk", risk: "high", score: 84,
+        reason: "Repetitive data entry, reconciliation, and processing are core AI automation targets across every industry.",
+        aiUses: ["AP/AR automation","Anomaly detection","Reconciliation AI","Fraud flagging"],
+        atRisk: ["Payroll processors","AP/AR clerks","Budget entry staff"],
+        tA: 65, tO: 15, tR: 20,
+        tasks: [
+          { icon: "🔎", label: "Fraud investigation & anomaly review", desc: "Shift from entering data to investigating the anomalies AI flags - a higher-stakes, more skilled function with real accountability." },
+          { icon: "📋", label: "Vendor relationship management", desc: "Proactively manage vendor contracts, spot billing discrepancies, and negotiate better terms - work AI cannot do." },
+          { icon: "📚", label: "Financial literacy support for staff", desc: "Help department managers understand budget reports and make better spending decisions through direct education." }
+        ]
+      },
+      { title: "Budget Analyst", risk: "medium", score: 58,
+        reason: "Forecasting and scenario analysis are increasingly AI-assisted. Political judgment, stakeholder engagement, and novel challenges require humans.",
+        aiUses: ["Revenue forecasting","Scenario modeling","Grant tracking","Variance analysis AI"],
+        atRisk: ["Junior budget analysts","Grant compliance clerks"],
+        tA: 30, tO: 15, tR: 55,
+        tasks: [
+          { icon: "🗣", label: "Stakeholder engagement & budget literacy", desc: "Spend more time translating budget data for department heads, elected officials, and the public - the communication gap is enormous." },
+          { icon: "🔬", label: "Deeper scenario & equity analysis", desc: "Use AI modeling speed to run more stress tests, equity impact analyses, and long-term projections that were not feasible before." },
+          { icon: "💡", label: "Grant strategy & revenue innovation", desc: "Actively pursue new federal/state grants, impact investment opportunities, and alternative revenue streams." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Human Resources",
+    icon: "👥",
+    desc: "Recruitment · Benefits · Employee Relations · Workforce Planning",
+    software: [
+      { name: "Workday HCM", type: "HR Platform / AI", desc: "AI-assisted resume screening, benefits administration, workforce planning, and predictive attrition modeling. Widely used in government." },
+      { name: "SAP SuccessFactors", type: "HR Platform / AI", desc: "Government-grade HR suite with AI-powered talent acquisition, onboarding automation, and skills gap analysis." },
+      { name: "Leena AI", type: "HR Chatbot", desc: "Employee-facing chatbot handling benefits Q&A, HR policy questions, and onboarding guidance 24/7 without staff intervention." },
+      { name: "Eightfold AI", type: "Talent Intelligence", desc: "Uses AI to match candidates to roles based on skills and potential rather than credentials - helps governments compete for talent." }
+    ],
+    roles: [
+      { title: "HR Generalist", risk: "medium", score: 65,
+        reason: "Benefits Q&A, resume screening, and onboarding paperwork are automatable. Strategic HR and employee relations remain deeply human.",
+        aiUses: ["Resume screening","Benefits chatbots","Onboarding AI","Workforce analytics"],
+        atRisk: ["HR assistants","Benefits coordinators","Recruitment support staff"],
+        tA: 35, tO: 15, tR: 50,
+        tasks: [
+          { icon: "🌱", label: "Employee development & career pathing", desc: "Use AI workforce analytics to identify skill gaps and design upskilling pathways as AI transforms many roles." },
+          { icon: "🤝", label: "Employee relations & conflict resolution", desc: "Devote more time to mediation, performance coaching, mental health support, and retention conversations." },
+          { icon: "🎯", label: "Strategic workforce planning", desc: "Partner with department heads to anticipate hiring needs, succession gaps, and the impact of new technologies 2-3 years out." },
+          { icon: "🔍", label: "Dedicated and sustained recruitment", desc: "Invest freed time in proactive, relationship-based recruitment — building pipelines before vacancies arise rather than reacting to them." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Constituent Services / 311",
+    icon: "📞",
+    desc: "Call Center · Service Request Routing · Resident Support",
+    software: [
+      { name: "SeeClickFix", type: "311 / CRM Platform", desc: "Digital 311 platform with AI routing that automatically categorizes and assigns service requests. Deployed in hundreds of cities." },
+      { name: "Salesforce Government Cloud + Einstein", type: "CRM / AI", desc: "AI-powered constituent relationship management with automated case routing, sentiment analysis, and chatbot integration." },
+      { name: "AskJacky", type: "AI Chatbot", desc: "Purpose-built government chatbot deployed in Midland TX and other cities. Handles resident queries 24/7 and routes to CRM." },
+      { name: "AWS Connect + Amazon Lex", type: "AI Call Center", desc: "Cloud contact center with conversational AI that handles routine calls, routes complex ones, and gives agents real-time suggested responses." },
+      { name: "Quiq", type: "Messaging AI", desc: "Enables government agencies to handle resident inquiries via SMS, WhatsApp, and web chat with AI-assisted responses." }
+    ],
+    roles: [
+      { title: "311 / Call Center Operator", risk: "high", score: 85,
+        reason: "High-volume repetitive routing and information requests are a primary AI chatbot use case - already piloted in NYC, Boston, and Buenos Aires.",
+        aiUses: ["Chatbots","Auto-routing","NLP classification","Self-service portals"],
+        atRisk: ["311 operators","Info desk clerks","Service request coordinators"],
+        tA: 65, tO: 10, tR: 25,
+        tasks: [
+          { icon: "🔍", label: "Complex case resolution & escalation", desc: "Take on difficult multi-department cases that AI cannot resolve - the ones that currently fall through the cracks." },
+          { icon: "📣", label: "Community feedback synthesis", desc: "Analyze patterns in AI-routed requests to surface systemic issues to department heads before they become crises." },
+          { icon: "🧩", label: "Vulnerable resident support", desc: "Dedicate focused attention to elderly, disabled, or non-digital residents who need human guidance navigating city services." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Planning & Zoning",
+    icon: "🗺",
+    desc: "Land Use · Permitting · Zoning Review · Community Planning",
+    software: [
+      { name: "Accela", type: "Permitting Platform / AI", desc: "The most widely used permitting and licensing platform in government, with AI-assisted application review, automated workflows, and status tracking." },
+      { name: "OpenGov Permitting & Licensing", type: "Permitting AI", desc: "Cloud-based permitting with AI document review, zoning code lookup, and automated compliance checking designed for local government." },
+      { name: "Esri ArcGIS with AI Extensions", type: "GIS / AI Analytics", desc: "Industry-standard GIS platform with AI-powered spatial analysis, satellite image classification, change detection, and predictive land use modeling." },
+      { name: "UrbanFootprint", type: "Urban Planning AI", desc: "AI-powered scenario modeling for planners - simulates the impact of zoning changes, development proposals, and infrastructure investments." },
+      { name: "Zencity", type: "Community Intelligence AI", desc: "Analyzes public comments, social media, and service requests using NLP to surface resident sentiment and priority issues for planners." }
+    ],
+    roles: [
+      { title: "Permit Technician", risk: "high", score: 88,
+        reason: "Routine application intake, code compliance checks, and status updates are highly automatable via AI review tools.",
+        aiUses: ["Document parsing","Code checking","Auto-routing","Status bots"],
+        atRisk: ["Permit clerks","Application reviewers","Counter staff"],
+        tA: 60, tO: 15, tR: 25,
+        tasks: [
+          { icon: "🤝", label: "Applicant coaching & pre-submission guidance", desc: "Help applicants avoid rejections by walking them through requirements before they submit, reducing costly revision cycles." },
+          { icon: "📊", label: "Process improvement & data analysis", desc: "Identify bottlenecks in the permit pipeline, track approval rates, and recommend policy changes based on real patterns." },
+          { icon: "🌐", label: "Equity & access outreach", desc: "Proactively reach non-English speakers, small businesses, and first-time applicants who struggle most with complex systems." }
+        ]
+      },
+      { title: "Planner (Entry-Level)", risk: "medium", score: 52,
+        reason: "Report writing, code lookups, and public comment analysis can be AI-assisted. Senior planning judgment and community engagement remain human.",
+        aiUses: ["Report drafting AI","Zoning code lookup","Public comment NLP","Impact modeling"],
+        atRisk: ["Planning assistants","Permit review support staff"],
+        tA: 25, tO: 15, tR: 60,
+        tasks: [
+          { icon: "🏘", label: "Deeper community engagement", desc: "Move beyond required public hearings to ongoing neighborhood conversations - the relational work that shapes whether plans succeed." },
+          { icon: "📡", label: "Emerging issues research", desc: "Study housing innovation, climate adaptation, and demographic trends before they become crises requiring reactive planning." },
+          { icon: "🔗", label: "Interdepartmental project coordination", desc: "Serve as connective tissue between planning, public works, housing, and transportation to reduce costly siloed decisions." }
+        ]
+      },
+      { title: "GIS Technician", risk: "medium", score: 55,
+        reason: "Routine mapping and data layer updates are automatable. Complex spatial analysis and custom workflows retain human value.",
+        aiUses: ["Auto-mapping","Layer classification","Satellite image AI","Spatial pattern detection"],
+        atRisk: ["GIS data entry techs","Routine mapping analysts"],
+        tA: 30, tO: 15, tR: 55,
+        tasks: [
+          { icon: "🗺", label: "Advanced spatial storytelling", desc: "Build compelling interactive maps that help elected officials and residents understand equity, climate risk, and infrastructure gaps." },
+          { icon: "🔗", label: "Cross-department data integration", desc: "Connect siloed datasets across departments into unified spatial views - work requiring institutional knowledge AI does not have." },
+          { icon: "🌿", label: "Climate & resilience mapping", desc: "Apply GIS skills to flood risk, heat island analysis, green infrastructure planning, and sea-level scenarios." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Code Enforcement",
+    icon: "🔍",
+    desc: "Property Inspections · Violation Detection · Compliance",
+    software: [
+      { name: "City Detect (PASS AI)", type: "Computer Vision", desc: "Vehicle-mounted AI cameras that scan streets at driving speed and automatically flag blight violations. Used by Stockton CA and expanding to Dallas TX." },
+      { name: "Accela Code Enforcement", type: "Case Management / AI", desc: "AI-assisted violation routing, inspection scheduling, case management, and automated notice generation for code enforcement teams." },
+      { name: "OpenGov Code Enforcement", type: "Workflow AI", desc: "Tracks complaints, automates inspection scheduling, and uses data analytics to identify high-risk properties and priority enforcement areas." },
+      { name: "Nearmap AI", type: "Aerial Imagery AI", desc: "High-resolution aerial imagery with AI change detection that identifies new structures, additions, and property changes without ground visits." }
+    ],
+    roles: [
+      { title: "Code Enforcement Inspector", risk: "medium", score: 62,
+        reason: "AI vision tools automate violation detection. On-site inspection, judgment calls, and enforcement still require humans.",
+        aiUses: ["Computer vision scanning","Violation triage","Route optimization","Report generation"],
+        atRisk: ["Routine patrol inspectors","Complaint intake staff"],
+        tA: 35, tO: 20, tR: 45,
+        tasks: [
+          { icon: "🏘", label: "Proactive neighborhood engagement", desc: "Shift from reactive complaint response to building relationships with landlords and property owners before violations occur." },
+          { icon: "⚖", label: "Complex case investigation", desc: "Focus on properties with multiple violations, absentee landlords, or tenant safety situations requiring legal knowledge and context." },
+          { icon: "📚", label: "Owner education & compliance workshops", desc: "Run workshops for property owners on code requirements, especially in areas with new residents or first-time landlords." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Public Works & Infrastructure",
+    icon: "🔧",
+    desc: "Roads · Utilities · Maintenance · Civil Engineering",
+    software: [
+      { name: "Uptake Asset Performance Management", type: "Predictive Maintenance AI", desc: "Uses sensor data and machine learning to predict infrastructure failures before they happen, reducing emergency repair costs." },
+      { name: "Orbital Insight", type: "Infrastructure Monitoring AI", desc: "Satellite and aerial imagery AI that monitors infrastructure conditions, detects changes, and tracks maintenance needs across large service areas." },
+      { name: "RoadBotics (Streetlogic)", type: "Pavement AI", desc: "AI-powered pavement assessment using vehicle-mounted cameras. Automatically rates road conditions and generates prioritized maintenance schedules." },
+      { name: "IBM Maximo with AI", type: "Asset Management", desc: "Enterprise asset management with predictive AI for infrastructure maintenance scheduling, used by many large municipalities." },
+      { name: "Cityworks", type: "Public Works AMS", desc: "GIS-centric asset management system with AI work order automation and infrastructure analytics for public works departments." }
+    ],
+    roles: [
+      { title: "Civil Engineer", risk: "low", score: 22,
+        reason: "Infrastructure design, inspection sign-off, and professional accountability are human roles requiring licensed judgment.",
+        aiUses: ["Structural sensor AI","Pothole detection","Design review assist"], atRisk: [],
+        tA: 15, tO: 15, tR: 70,
+        tasks: [
+          { icon: "♻", label: "Climate resilience engineering", desc: "Focus expertise on redesigning infrastructure for extreme weather, sea-level rise, and heat - the defining engineering challenge of the next 30 years." },
+          { icon: "📡", label: "Sensor network design & oversight", desc: "Design and manage the expanding network of infrastructure sensors that AI uses, requiring engineering judgment and accountability." },
+          { icon: "🤝", label: "Community infrastructure communication", desc: "Translate complex engineering trade-offs into terms residents and elected officials can act on - a gap that consistently derails good projects." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Transportation & Transit",
+    icon: "🚌",
+    desc: "Bus & Paratransit · Route Planning · Traffic · Scheduling",
+    software: [
+      { name: "Remix by Via", type: "Transit Planning AI", desc: "AI-powered transit network planning that models route scenarios, equity impacts, and demand forecasting. Used by 500+ transit agencies." },
+      { name: "Optibus", type: "Transit Scheduling AI", desc: "Machine learning-based scheduling and rostering for bus and rail operations. Optimizes routes, reduces deadhead miles, and cuts operational costs." },
+      { name: "Cubic ITS (Trafficware)", type: "Traffic Signal AI", desc: "AI-powered adaptive traffic signal control like Pittsburgh uses - analyzes real-time flow and adjusts signal timing automatically." },
+      { name: "Via Transportation", type: "Paratransit AI", desc: "AI-powered dynamic paratransit and on-demand transit routing that matches riders and vehicles in real time for far more efficient operations." },
+      { name: "Swiftly", type: "Transit Analytics", desc: "Real-time transit performance analytics with AI-powered schedule adherence, passenger load forecasting, and delay prediction." }
+    ],
+    roles: [
+      { title: "Transit Scheduler", risk: "medium", score: 60,
+        reason: "AI is optimizing routes and timetabling. Human judgment remains essential for equity considerations and community input.",
+        aiUses: ["Route optimization AI","Demand forecasting","Real-time adjustment","Paratransit AI matching"],
+        atRisk: ["Schedule coordinators","Route planning analysts"],
+        tA: 35, tO: 15, tR: 50,
+        tasks: [
+          { icon: "♿", label: "Paratransit & accessibility advocacy", desc: "Work directly with riders who have complex mobility needs to improve service in ways algorithmic optimization consistently overlooks." },
+          { icon: "🏙", label: "Equity-based service design", desc: "Analyze AI route recommendations for disparate impact on low-income, transit-dependent communities and advocate for corrections." },
+          { icon: "🤝", label: "Community input & co-design", desc: "Run neighborhood listening sessions to incorporate lived experience into route planning - a human function no AI model can replicate." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Public Safety - Fire & EMS",
+    icon: "🚒",
+    desc: "Firefighting · Emergency Medical Services · Prevention",
+    software: [
+      { name: "Esri Public Safety Suite", type: "GIS / Risk AI", desc: "Geospatial analytics for fire risk modeling, pre-incident planning, resource deployment, and post-incident analysis." },
+      { name: "Carbyne Command", type: "AI Dispatch", desc: "AI-enhanced emergency dispatch with real-time caller location, multimedia sharing, and predictive resource allocation." },
+      { name: "ImageTrend", type: "Records / Analytics AI", desc: "EMS and fire records management with AI-assisted report writing, protocol compliance checking, and outcome analytics." },
+      { name: "Motorola PremierOne CAD", type: "CAD / AI Dispatch", desc: "Computer-aided dispatch with AI-powered call prioritization, resource recommendations, and predictive demand modeling for fire and EMS." }
+    ],
+    roles: [
+      { title: "Firefighter / EMT", risk: "low", score: 14,
+        reason: "Physical emergency response is AI-resistant. AI assists in dispatch, pre-incident planning, and risk scoring but cannot replace field presence.",
+        aiUses: ["Risk scoring","Pre-incident planning","Dispatch optimization"], atRisk: [],
+        tA: 10, tO: 5, tR: 85,
+        tasks: [
+          { icon: "🏫", label: "Community fire prevention & education", desc: "Use AI-generated risk profiles to focus prevention visits on highest-risk properties and populations - targeted and data-informed." },
+          { icon: "🧠", label: "Mental health & peer support programs", desc: "Invest in wellness programs that reduce burnout and PTSD in a profession with severe mental health challenges." },
+          { icon: "🔬", label: "Advanced training & simulation", desc: "Use time saved by AI-assisted report writing to run more complex scenario training exercises and cross-agency drills." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Public Safety - Police",
+    icon: "🚔",
+    desc: "Patrol · Community Policing · Investigations",
+    software: [
+      { name: "Axon + Draft One", type: "Report Writing AI", desc: "Automatically drafts police reports from body camera audio. Officers review and edit rather than write from scratch, saving significant time." },
+      { name: "ShotSpotter (SoundThinking)", type: "Acoustic Detection AI", desc: "AI-powered gunshot detection that alerts dispatch within seconds of a shooting. Deployed in 150+ US cities." },
+      { name: "NICE Justice", type: "Digital Evidence AI", desc: "AI platform for processing, organizing, and searching digital evidence (video, photos, documents) to streamline investigations and prosecutions." },
+      { name: "Fusus", type: "Real-Time Crime AI", desc: "Integrates camera feeds, sensors, and CAD data into a real-time intelligence platform for dispatch and investigative use." },
+      { name: "PredPol / Geolitica", type: "Predictive Analytics", desc: "Crime pattern analysis and patrol resource allocation AI. Note: these tools carry documented bias and civil liberties concerns requiring careful governance." }
+    ],
+    roles: [
+      { title: "Police Officer (Patrol)", risk: "low", score: 18,
+        reason: "Field presence, judgment, community trust, and physical response are AI-resistant. AI aids in analytics and dispatch, not field work.",
+        aiUses: ["Predictive patrol analytics","License plate readers","Crime pattern analysis"], atRisk: [],
+        tA: 12, tO: 8, tR: 80,
+        tasks: [
+          { icon: "🤝", label: "Community relationship building", desc: "Invest freed administrative time into foot patrol, community meetings, and trust-building that makes neighborhoods safer long-term." },
+          { icon: "🧭", label: "Diversion & co-responder programs", desc: "Partner with social workers and mental health teams for calls that do not require law enforcement - a better outcome for everyone." },
+          { icon: "📖", label: "Thorough documentation & legal preparation", desc: "Use AI to draft initial reports faster, then invest that time in more thorough documentation that holds up in court." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Courts & Legal",
+    icon: "⚖",
+    desc: "City Attorney · Court Clerks · Docket Management · Public Records",
+    software: [
+      { name: "Tyler Technologies Odyssey", type: "Court Management AI", desc: "The most widely deployed court case management system in the US, with AI-assisted scheduling, document processing, and e-filing workflows." },
+      { name: "Westlaw / LexisNexis AI", type: "Legal Research AI", desc: "AI-powered legal research platforms that surface relevant case law, statutes, and precedents in seconds - standard tools for city attorneys." },
+      { name: "Relativity (eDiscovery AI)", type: "Document Review AI", desc: "AI-assisted document review and redaction for public records requests and legal discovery. Dramatically reduces time on FOIA processing." },
+      { name: "Harvey AI", type: "Legal Gen AI", desc: "Generative AI trained on legal data that assists with contract drafting, legal research synthesis, and document summarization." },
+      { name: "Granicus GovDelivery", type: "Records / Transparency AI", desc: "Government communications and records platform with AI tools for public records request management and proactive transparency publishing." }
+    ],
+    roles: [
+      { title: "Court Clerk / Docket Manager", risk: "high", score: 80,
+        reason: "Document indexing, scheduling, notice generation, and routine filings are highly repetitive and ripe for automation.",
+        aiUses: ["Docket AI","Document classification","Scheduling optimization","Notice generation"],
+        atRisk: ["Court clerks","Docket coordinators","Filing staff"],
+        tA: 55, tO: 20, tR: 25,
+        tasks: [
+          { icon: "👨‍⚖️", label: "Pro se litigant support", desc: "Assist unrepresented individuals navigating court processes - a critical access-to-justice function that AI cannot ethically fulfill." },
+          { icon: "📜", label: "Records integrity & exception handling", desc: "Focus on complex filings, sealed records, expungements, and orders requiring careful human judgment and legal knowledge." },
+          { icon: "🔗", label: "Cross-agency coordination", desc: "Improve information flow between courts, prosecutors, public defenders, and probation - gaps that cause costly delays and injustice." }
+        ]
+      },
+      { title: "Public Records Coordinator", risk: "medium", score: 68,
+        reason: "FOIA processing, document redaction, and indexing are high-volume and repetitive. AI tools are already being piloted for exactly this.",
+        aiUses: ["Auto-redaction","Document search AI","Request routing","Index generation"],
+        atRisk: ["Records request clerks","Document management staff"],
+        tA: 40, tO: 20, tR: 40,
+        tasks: [
+          { icon: "🔏", label: "Privacy & exemption judgment", desc: "Focus on difficult redaction decisions - privacy balancing, privilege questions, law enforcement exemptions - where AI errors create legal liability." },
+          { icon: "📂", label: "Records governance & retention policy", desc: "Improve the city's overall records management framework - retention schedules, digitization priorities, and legal holds." },
+          { icon: "🌐", label: "Proactive transparency initiatives", desc: "Move from reactive FOIA responses to proactively publishing commonly requested data, reducing future request volume significantly." }
+        ]
+      },
+      { title: "City Attorney", risk: "low", score: 25,
+        reason: "Legal strategy, courtroom advocacy, negotiation, and professional liability require licensed human judgment.",
+        aiUses: ["Legal research AI","Contract review","Document summarization"], atRisk: [],
+        tA: 20, tO: 10, tR: 70,
+        tasks: [
+          { icon: "⚖", label: "Proactive legal risk management", desc: "Review city policies, contracts, and practices for legal exposure before problems become lawsuits - a shift from reactive to preventive law." },
+          { icon: "📜", label: "Policy drafting & legislative quality", desc: "Use research time savings to improve the quality of local ordinances - better written law means less future litigation." },
+          { icon: "🏛", label: "Legal literacy training for staff", desc: "Educate department heads on legal risks and compliance in plain language, reducing the avoidable legal problems they inadvertently create." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Cross-Departmental Support",
+    icon: "🔄",
+    desc: "Data Entry · Translation · Administrative Operations",
+    software: [
+      { name: "Microsoft Azure AI Document Intelligence", type: "Document AI / OCR", desc: "Extracts structured data from forms, invoices, permits, and handwritten documents automatically - eliminates large portions of manual data entry." },
+      { name: "UiPath (Robotic Process Automation)", type: "RPA / Automation", desc: "Automates repetitive computer-based tasks like copying data between systems, filling forms, and generating standard reports without human intervention." },
+      { name: "DeepL / Google Cloud Translation", type: "Translation AI", desc: "High-accuracy machine translation for documents and communications. DeepL is widely considered the most accurate for nuanced government language." },
+      { name: "Smartling", type: "Localization AI", desc: "Enterprise translation management combining AI translation with human review workflows - well-suited for multilingual government communications." },
+      { name: "Automation Anywhere", type: "RPA / AI Automation", desc: "Intelligent automation platform combining RPA with AI to handle complex multi-step processes across government departments." }
+    ],
+    roles: [
+      { title: "Administrative Assistant", risk: "medium", score: 58,
+        reason: "The routine, transactional portions of this role — scheduling, data entry, document formatting, filing, and standard correspondence — are highly automatable. But the connective tissue an experienced admin provides across a department is harder to replicate: institutional memory, judgment about priorities, and the human relationships that keep an office functioning. The role isn't disappearing — it's being fundamentally restructured. The share of the day spent on mechanical tasks shrinks significantly; the share requiring judgment, communication, and organizational awareness grows.",
+        aiUses: ["AI scheduling & calendar management","Document drafting & formatting","Automated data entry & form processing","Meeting transcription & summarization","Email triage & response drafting"],
+        atRisk: ["Entry-level admin positions","Clerks performing primarily data entry or filing","Positions defined mainly by scheduling and correspondence"],
+        tA: 40, tO: 15, tR: 45,
+        tasks: [
+          { icon: "🔗", label: "Cross-departmental coordination & project support", desc: "Step into a genuine project coordinator role - tracking long-term initiatives, keeping stakeholders aligned, and managing the moving parts of work that department heads never have time to chase down themselves." },
+          { icon: "🏘", label: "Community-facing support & resident assistance", desc: "Bring administrative skills directly to residents - helping people navigate permit applications, benefits access, and city services in person, in the community, rather than from behind a desk managing paperwork." },
+          { icon: "🧠", label: "Institutional knowledge stewardship", desc: "Become the department's organizational memory - documenting processes, onboarding new staff, and ensuring that the knowledge accumulated over years doesn't walk out the door when people retire." }
+        ]
+      },
+      { title: "Translator / Interpreter", risk: "medium", score: 55,
+        reason: "AI translation has become accurate enough and affordable enough that there is no longer a logistical or financial justification for monolingual government communications. Routine documents — permit applications, utility notices, parks programming, budget summaries, public meeting agendas, 311 responses — can and should be translated into every language meaningfully represented in a city's population, as standard practice rather than special accommodation. The barrier was never philosophical. It was cost and capacity. Both are now effectively removed. A city government that communicates only in English in 2026 is not facing a resource constraint. It is making a choice. High-stakes interpretation — legal proceedings, crisis response, benefits determinations — remains a genuinely human function where mistranslation carries serious consequences. The role doesn't disappear. It narrows and elevates.",
+        aiUses: ["Machine translation","Multilingual chatbots","Real-time document translation","Multilingual 311 responses","Automated multilingual web content"],
+        atRisk: ["Staff translators working primarily on routine documents","Contracted translation services for standard communications"],
+        tA: 45, tO: 20, tR: 35,
+        tasks: [
+          { icon: "🌍", label: "Proactive multilingual community outreach", desc: "Stop waiting for non-English speakers to navigate city services and go find them. Use freed capacity to build genuine relationships with immigrant communities, ethnic organizations, and residents who have historically been least connected to local government." },
+          { icon: "⚖", label: "High-stakes interpretation & advocacy", desc: "Concentrate human expertise where it genuinely matters — legal hearings, police interactions, social services, crisis response, and any context where a translation error has real consequences for a real person's life." },
+          { icon: "📋", label: "Translation quality governance & community feedback", desc: "Become the city's authority on what good multilingual communication actually looks like — working with community members to catch cultural nuance AI misses and ensuring the city's voice in other languages reflects genuine respect rather than mechanical adequacy." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Library Services",
+    icon: "📚",
+    desc: "Reference · Programming · Digital Literacy · Cataloging",
+    software: [
+      { name: "BiblioCommons", type: "Library Discovery AI", desc: "AI-powered library catalog and discovery platform that personalizes recommendations and simplifies search for patrons across collections." },
+      { name: "OCLC WorldShare", type: "Cataloging AI", desc: "AI-assisted cataloging that auto-suggests metadata, subject headings, and classifications - dramatically reducing manual cataloging time." },
+      { name: "Springshare LibAnswers", type: "Reference AI", desc: "AI-powered reference management with a chatbot that handles common patron questions and routes complex queries to librarians." },
+      { name: "Aspen Discovery", type: "ILS / AI", desc: "Next-generation integrated library system with AI-enhanced search, reading recommendations, and program discovery for patrons." }
+    ],
+    roles: [
+      { title: "Librarian", risk: "low", score: 30,
+        reason: "Community programming, digital literacy instruction, and human connection are AI-resistant. Routine cataloging may be automated.",
+        aiUses: ["Catalog AI","Archive tagging","Digital reference assist"],
+        atRisk: ["Cataloging technicians"],
+        tA: 18, tO: 10, tR: 72,
+        tasks: [
+          { icon: "💻", label: "AI & digital literacy instruction", desc: "Position the library as the community's primary AI education hub - teaching residents how to use, evaluate, and critically engage with AI tools." },
+          { icon: "📚", label: "Curated, expert-led reference services", desc: "Double down on deep reference work - research consultations, specialized collections, and guidance AI chatbots consistently give poorly." },
+          { icon: "🤝", label: "Community connection programming", desc: "Expand programs that bring people together - civic engagement, lifelong learning, workforce transitions - the library's unique social role." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Parks & Recreation",
+    icon: "🌳",
+    desc: "Programs · Facilities · Community Events · Maintenance",
+    software: [
+      { name: "ActiveNet / PerfectMind", type: "Recreation Management AI", desc: "AI-enhanced parks and recreation management with demand forecasting, automated registration, facility scheduling, and waitlist management." },
+      { name: "Cartegraph Asset Management", type: "Parks Maintenance AI", desc: "AI-assisted parks asset management with predictive maintenance scheduling, inspection workflows, and condition tracking for facilities." },
+      { name: "Rec1", type: "Registration AI", desc: "Online recreation registration with AI-powered program recommendations, chatbot support, and automated waitlist management." },
+      { name: "Esri Parks & Recreation Suite", type: "GIS / Planning AI", desc: "Spatial analytics for parks equity analysis, trail condition monitoring, facility siting decisions, and green space planning." }
+    ],
+    roles: [
+      { title: "Parks & Rec Program Coordinator", risk: "low", score: 28,
+        reason: "In-person programming, community building, and event management require human presence. Scheduling and registration can be AI-assisted.",
+        aiUses: ["Demand forecasting","Registration chatbots","Maintenance scheduling"],
+        atRisk: ["Registration clerks"],
+        tA: 18, tO: 10, tR: 72,
+        tasks: [
+          { icon: "🎨", label: "Innovative & inclusive programming design", desc: "Use AI demand analysis to understand what communities want, then design creative programs that serve underrepresented groups." },
+          { icon: "🌿", label: "Park equity & access advocacy", desc: "Ensure programs and facilities reach all neighborhoods, particularly those historically underserved by parks investment." },
+          { icon: "🤝", label: "Community co-creation", desc: "Engage residents as active designers and leaders of programs rather than just participants - deepening civic connection and ownership." }
+        ]
+      }
+    ]
+  }
+];
+
+var openDepts = {};
+var openCards = {};
+
+function toggleDept(di) {
+  openDepts[di] = !openDepts[di];
+  var body = document.getElementById('db-' + di);
+  var arrow = document.getElementById('da-' + di);
+  body.classList.toggle('open', !!openDepts[di]);
+  arrow.classList.toggle('open', !!openDepts[di]);
+}
+
+function toggleCard(ci) {
+  openCards[ci] = !openCards[ci];
+  var panel = document.getElementById('cp-' + ci);
+  var arrow = document.getElementById('ca-' + ci);
+  panel.classList.toggle('open', !!openCards[ci]);
+  arrow.classList.toggle('open', !!openCards[ci]);
+}
+
+function expandAll() {
+  depts.forEach(function(d, di) {
+    openDepts[di] = true;
+    var body = document.getElementById('db-' + di);
+    var arrow = document.getElementById('da-' + di);
+    if (body) { body.classList.add('open'); arrow.classList.add('open'); }
+  });
+}
+
+function collapseAll() {
+  depts.forEach(function(d, di) {
+    openDepts[di] = false;
+    var body = document.getElementById('db-' + di);
+    var arrow = document.getElementById('da-' + di);
+    if (body) { body.classList.remove('open'); arrow.classList.remove('open'); }
+  });
+  openCards = {};
+  document.querySelectorAll('.realloc-panel').forEach(function(p) { p.classList.remove('open'); });
+  document.querySelectorAll('.expand-arrow').forEach(function(a) { a.classList.remove('open'); });
+}
+
+function buildApp() {
+  var app = document.getElementById('app');
+  var cardIdx = 0;
+  var tH = 0, tM = 0, tL = 0;
+
+  depts.forEach(function(dept, di) {
+    var high = 0, med = 0, low = 0;
+    dept.roles.forEach(function(r) {
+      if (r.risk === 'high') high++;
+      else if (r.risk === 'medium') med++;
+      else low++;
+    });
+    tH += high; tM += med; tL += low;
+
+    var pills = '';
+    if (high) pills += '<span class="pill high">' + high + ' high</span>';
+    if (med) pills += '<span class="pill medium">' + med + ' medium</span>';
+    if (low) pills += '<span class="pill low">' + low + ' low</span>';
+
+    // Software HTML
+    var swHTML = '';
+    if (dept.software && dept.software.length) {
+      var cards = dept.software.map(function(s) {
+        return '<div class="software-card"><div class="software-name">' + s.name + '<span class="software-type">' + s.type + '</span></div><div class="software-desc">' + s.desc + '</div></div>';
+      }).join('');
+      swHTML = '<div class="software-bar"><div class="software-bar-title">AI Software Available for This Department</div><div class="software-grid">' + cards + '</div></div>';
+    }
+
+    // Roles HTML
+    var rolesHTML = dept.roles.map(function(r) {
+      var ci = cardIdx++;
+      var atRiskTxt = r.atRisk.length ? '<strong>Similar roles most at risk:</strong> ' + r.atRisk.join(' &middot; ') : '<strong>Role is relatively protected.</strong>';
+      var tagsHTML = r.aiUses.map(function(t) { return '<span class="ai-tag">' + t + '</span>'; }).join('');
+      var tasksHTML = r.tasks.map(function(t) {
+        return '<div class="task-row"><div class="task-icon">' + t.icon + '</div><div><div class="task-label">' + t.label + '</div><div class="task-desc">' + t.desc + '</div></div></div>';
+      }).join('');
+
+      return '<div class="card ' + r.risk + '">' +
+        '<div class="card-main" onclick="toggleCard(' + ci + ')">' +
+          '<div class="card-header"><div class="card-title">' + r.title + '</div><div class="risk-badge ' + r.risk + '">' + r.risk + ' risk</div></div>' +
+          '<div class="bar-container"><div class="bar-label"><span>Disruption exposure</span><span>' + r.score + '%</span></div><div class="bar-track"><div class="bar-fill" style="width:' + r.score + '%"></div></div></div>' +
+          '<div class="card-reason">' + r.reason + '</div>' +
+          '<div class="at-risk-line">' + atRiskTxt + '</div>' +
+          '<div style="font-family:IBM Plex Mono,monospace;font-size:0.95rem;letter-spacing:0.08em;text-transform:uppercase;color:#4338ca;margin-top:10px;margin-bottom:4px;">AI can do:</div>' +
+          '<div class="ai-tags">' + tagsHTML + '</div>' +
+        '</div>' +
+        '<div class="expand-btn" onclick="toggleCard(' + ci + ')"><span>&#8627; Better Use of Time</span><span class="expand-arrow" id="ca-' + ci + '">&#9662;</span></div>' +
+        '<div class="realloc-panel" id="cp-' + ci + '">' +
+          '<div class="realloc-inner">' +
+            '<div class="realloc-title">Where the freed time should go</div>' +
+            '<div class="time-stack">' +
+              '<div class="time-segment seg-auto" style="width:' + r.tA + '%">' + r.tA + '%</div>' +
+              '<div class="time-segment seg-oversight" style="width:' + r.tO + '%">' + r.tO + '%</div>' +
+              '<div class="time-segment seg-reinvest" style="width:' + r.tR + '%">' + r.tR + '%</div>' +
+            '</div>' +
+            '<div class="time-legend">' +
+              '<div class="tleg-item"><div class="tleg-dot" style="background:#fca5a5"></div>Automated away &mdash; AI handles independently (' + r.tA + '%)</div>' +
+              '<div class="tleg-item"><div class="tleg-dot" style="background:#a5b4fc"></div>AI oversight &mdash; reviewing &amp; correcting outputs (' + r.tO + '%)</div>' +
+              '<div class="tleg-item"><div class="tleg-dot" style="background:#6ee7b7"></div>High-value reinvestment &mdash; freed for better work (' + r.tR + '%)</div>' +
+            '</div>' +
+            '<div class="realloc-tasks">' + tasksHTML + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    var section = document.createElement('div');
+    section.className = 'dept-section';
+    section.innerHTML =
+      '<div class="dept-header" onclick="toggleDept(' + di + ')">' +
+        '<div class="dept-left">' +
+          '<div class="dept-icon">' + dept.icon + '</div>' +
+          '<div><div class="dept-name">' + dept.name + '</div><div class="dept-meta">' + dept.desc + '</div></div>' +
+        '</div>' +
+        '<div class="dept-right"><div class="dept-risk-pills">' + pills + '</div><div class="dept-arrow" id="da-' + di + '">&#9662;</div></div>' +
+      '</div>' +
+      '<div class="dept-body" id="db-' + di + '">' + swHTML + '<div class="role-grid">' + rolesHTML + '</div></div>';
+
+    app.appendChild(section);
+  });
+
+  document.getElementById('count-dept').textContent = depts.length;
+  document.getElementById('count-high').textContent = tH;
+  document.getElementById('count-medium').textContent = tM;
+  document.getElementById('count-low').textContent = tL;
+}
+
+buildApp();
+</script>
+</body>
+</html>
