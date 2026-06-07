@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI and Local Government</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --purple: #4338ca;
+    --green: #15803d;
+    --muted: #6b7280;
+    --light: #f8f9ff;
+    --border: #e0e7ff;
+    --surface: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--light);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(248,249,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+
+  .nav-brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--purple);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--purple); }
+
+  /* HERO */
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 40px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 6vw, 4.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .hero h1 .arrow { color: var(--green); }
+
+  .hero-sub {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: var(--muted);
+    margin-bottom: 28px;
+    line-height: 1.4;
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: #374151;
+    max-width: 680px;
+    line-height: 1.75;
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 64px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ARTICLE */
+  .article-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .article-subtitle {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  .article-body h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    margin: 40px 0 14px;
+    color: var(--ink);
+  }
+
+  .article-body p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #1f2937;
+  }
+
+  .article-body em {
+    font-style: italic;
+  }
+
+  .article-body a {
+    color: var(--purple);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .article-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    line-height: 1.6;
+  }
+
+  /* CHART */
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .chart-card-text h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+  }
+
+  .chart-card-text p {
+    font-size: 1.1rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .chart-link {
+    display: inline-block;
+    background: var(--purple);
+    color: white;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    text-decoration: none;
+    transition: background 0.2s;
+    align-self: flex-start;
+  }
+
+  .chart-link:hover { background: #3730a3; }
+
+  /* MEDIA */
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .media-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .media-card:hover {
+    border-color: var(--purple);
+    box-shadow: 0 4px 20px rgba(67,56,202,0.08);
+  }
+
+  .media-type {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .media-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    line-height: 1.3;
+  }
+
+  .media-card p {
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .media-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: #9ca3af;
+    letter-spacing: 0.06em;
+  }
+
+  .media-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+
+  .media-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--purple);
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+
+  .media-link:hover {
+    background: var(--purple);
+    color: white;
+    border-color: var(--purple);
+  }
+
+  /* FOOTER */
+  footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .footer-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    line-height: 1.6;
+  }
+
+  .footer-note a { color: var(--purple); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero, section, footer { padding-left: 20px; padding-right: 20px; }
+    .chart-card { padding: 24px; }
+    .chart-card-text p { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#">AI &amp; Local Government</a>
+  <ul class="nav-links">
+    <li><a href="#article">Article</a></li>
+    <li><a href="#chart">The Chart</a></li>
+    <li><a href="#media">Media</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">A body of work on AI in local government</div>
+  <h1>More AI <span class="arrow">&#x2192;</span> More Humanity</h1>
+  <div class="hero-sub">Leveraging the time AI saves to connect with more people</div>
+  <p class="hero-desc">What should local governments actually do with the time AI gives back? Not more reports. Not more meetings. The case here is for using that time to show up — in neighborhoods, in communities, in the places where real conversations happen.</p>
+</div>
+
+<!-- ARTICLE -->
+<section id="article">
+  <div class="section-label">The Article</div>
+
+  <div class="article-title">More AI &#x2192; More Humanity</div>
+  <div class="article-subtitle">Leveraging the Time AI Saves to Connect with More People</div>
+
+  <div class="article-body">
+
+    <p>At an ICMA session about AI in 2023, I overheard someone say something I haven't been able to shake: <em>"If my staff isn't using AI, I tell them they're wasting taxpayer money."</em></p>
+
+    <p>I understood the instinct. The technology was arriving fast, the efficiency gains were real, and the pressure to modernize is something every local government leader feels. The question local governments need to ask is how to repurpose the time we save by using AI. I propose two chief investments of that time. First, establishing and building relationships in the community and second, internally taking on the long-term projects that are usually outsourced.</p>
+
+    <p>In three years, AI moved fast. We understand its power and its risks better. Local government has a choice: lean into this transition, or have it arrive unmanaged. Cities that navigate this best are intentional about what they do with AI.</p>
+
+    <h2>What's Already Here and the Hard Conversation It Brings</h2>
+
+    <p>I was talking through this article with a colleague when a city garbage truck rolled by. That job — the driver — will be done by a self-driving vehicle within a decade. But some jobs are nearly ready to be replaced: the permit technician, the 311 operator, the payroll clerk. Those jobs aren't waiting for new technology. The technology is here.</p>
+
+    <p>I've put together a department-by-department guide to what AI disruption looks like across local government — role by role, with assessments of which functions are being transformed, what AI to use, and how that time can be repurposed. You can explore it <a href="https://gabrielatos2026.github.io/AILocalGov/" target="_blank">here</a>.</p>
+
+    <p>What the page makes clear is that this isn't uniform. A civil engineer or a firefighter faces a different AI reality than the highly repetitive roles that AI can do. City leaders need to understand that landscape across their workforce.</p>
+
+    <p>Leveraging and managing the AI transition will be hard. But leaders who drift into this reality will be in a worse position than those who approach it deliberately. That means having honest conversations about what AI means for future budgets — not whether to lay off the person who holds a role today, but whether to backfill it when they leave. Attrition, redeployment, and retraining are the right tools. Start that work now. Ducking this conversation abdicates leadership, and to the point made above, wastes taxpayer dollars.</p>
+
+    <p>The page illustrates what most AI coverage misses: for every role being disrupted, there is a list of higher-value work that the person in that role could be doing instead. And therein, is how we can rethink local government.</p>
+
+    <h2>Maximizing What AI Gives Back</h2>
+
+    <p>The time AI returns to your staff should flow outward, toward the people local government exists to serve. We need to go meet people where they are.</p>
+
+    <p>Every community has a built-in infrastructure of formal engagement — boards, commissions, public hearings, the open house that only the regulars attend. That infrastructure has its place, but it underrepresents the people who are uncomfortable walking into a government building, filling out a form, or speaking publicly.</p>
+
+    <p>The residents who most need to be heard are often the ones least likely to show up through official channels. AI frees up the time to go build those relationships, listen to their concerns and embed them into your strategic plan and budget. AI also allows us to listen to and engage constituencies without language barriers, and we need to engage everyone.</p>
+
+    <h2>The Paradox</h2>
+
+    <p>The most sophisticated technology available to local government right now is the thing that reconnects us with our communities, enabling us to build relationships that will galvanize better feedback, outcomes, and even job applications with the city.</p>
+
+    <p><strong>More AI. More humanity. That's the paradox — and it's real.</strong></p>
+
+    <p>Over my ten years in city management, I found I've done it best by being in touch. In Albert Lea, Minnesota, I went door to door in the neighborhoods where resident confidence in city government was lowest. We knocked on 533 doors — me, the Mayor, the City Manager — between 5 and 7 in the evening: <em>Good evening, I'm the Assistant City Manager, how are things going in the neighborhood?</em></p>
+
+    <p>Most people didn't have an immediate concern. But they called a few days later. <em>You asked me to call if I thought of anything.</em> The service requests began a relationship and built trust.</p>
+
+    <p>In Beloit, I took it further. Satellite city halls — a table, a city banner, a Saturday morning — at a Latino-owned grocery store, the farmer's market, the Black barbershop. Some people came intentionally, and others were just going about their day and stopped because they saw the banner. Some of those accidental conversations were the most valuable ones. I encountered a wonderful mix of people who may not have been comfortable at City Hall, most of whom I would not have met otherwise.</p>
+
+    <p>Those conversations formed the backbone of my understanding of the communities I served. They shaped the work. And they built something that no meeting, no public comment period, and no social media presence ever could.</p>
+
+    <p>A community member once told me I was like a ribbon running through the community — perhaps the highest compliment I received in this work. I earned that through the Saturday mornings at enough grocery stores and the like. The owner of one store eventually invited me to his daughter's quinceañera. That doesn't happen because we sent a translated mailer. It was through the relationship that was built in the town square of the satellite city hall.</p>
+
+    <h2>The Town Square We Lost</h2>
+
+    <p>Social media gave staff a window into what their communities were thinking. And for a while, it worked. Local Facebook groups and Nextdoor threads were useful. They were a way to hear what neighbors were talking about, what was bothering people, what concerns they foresaw.</p>
+
+    <p>That window has been broken. What's happened, more than anything, is the nationalization of local issues. The emotion, and often anger, of national politics has seeped into the local Facebook group. The voices that dominate are the loudest and most aggrieved. Reasonable residents have gone quiet. The feed that used to reflect a community now reflects its fractions. Leaders who mistake that signal for community sentiment are measuring the wrong thing entirely.</p>
+
+    <p>Getting back into the community is the antidote. Not because it's a better communications strategy — but because it produces a completely different kind of conversation. Those conversations broadened and deepened my understanding of Albert Lea and Beloit. People talked about the park on their street, about their families, about the thing they've been meaning to mention for two years but never had a way to say. And we need to maximize AI to have those conversations in languages other than English.</p>
+
+    <h2>No More Monolingual Government</h2>
+
+    <p>I have worked in diverse communities. The composition of our boards, commissions, and attendance at city functions rarely reflected the diversity of those communities. Engaging those constituencies requires a sustained effort, building the relationship. Instead of just serving the people who showed up through normal outreach mechanisms, we should use the time that AI frees up to meet people we are often trying to serve but rarely meet. That is both a governance and communications gap. It raises a question leaders should be asking about their own community: what does your civic participation look like? Who isn't in the room?</p>
+
+    <p>AI translation removes the language gap. Permit applications, utility notices, council meeting agendas, 311 responses — all of it can be translated into languages used by your city's population at virtually no cost. A city government that communicates only in English in 2026 is not serving all its constituents. AI can build bridges externally, but it can also build relationships internally.</p>
+
+    <h2>The Work That Actually Matters, Done In-House</h2>
+
+    <p>I heard a question at a conference that has stayed with me: <em>"How much time is your staff working on a document that no one reads?"</em> A few examples came to mind: minutes, memos, and reports that satisfy a process without informing a decision. AI can handle that.</p>
+
+    <p>Cities spend significant resources hiring consultants to do their most interesting and consequential work — comprehensive plans, housing needs assessments, parks master plans, neighborhood studies. I'd argue that's partly because staff has never had the capacity to take it on. AI changes that calculus. We now have the time to take on the big stuff.</p>
+
+    <p>But here's what's more important than the money saved: those long-term projects are the ones that break down silos, improve morale and strengthen the team. They are the multi-departmental work that everyone finds rewarding. They require a parks coordinator, a planner, and a public works engineer to work together on something meaningful. They offer an opportunity to pull staff together from their administrative lanes and outward into the community. You cannot write a genuine comprehensive plan from inside city hall. You must go out and understand the place you're planning. If you click through the cards on the <a href="https://gabrielatos2026.github.io/AILocalGov/" target="_blank">webpage</a>, I offer suggestions as to some of the work that your teams can now do.</p>
+
+    <p>Understanding doesn't come from the open house that only the regulars attend. It comes from relationships. Real ones, built over time, through repeated presence in the same places with the same people. AI doesn't build those relationships, but it frees up time and capacity to build them. That time can be invested in strengthening your team by taking up the meaningful work you can now do internally.</p>
+
+    <h2>The Challenge</h2>
+
+    <p>So here's what I want to ask every leader reading this: what will your organization do with the time AI frees? What projects are better done in-house? What residents are you not meeting? Who can you now engage that language is no longer a barrier? What jobs need to be rethought?</p>
+
+    <p>The technology is here. It is going to change your organization. The question is what you do with it.</p>
+
+    <p><strong>Onward.</strong></p>
+
+    <div class="article-note">This article, and the AI Disruption in Local Government webpage, were made with extensive use of Claude.</div>
+
+  </div>
+</section>
+
+<!-- CHART -->
+<section id="chart">
+  <div class="section-label">The Tool</div>
+  <div class="chart-card">
+    <div class="chart-card-text">
+      <h3>AI Disruption in Local Government</h3>
+      <p>A department-by-department guide to AI disruption across local government — role by role, what AI tools are available, and how the freed time should be invested. 14 departments, 23 roles.</p>
+    </div>
+    <a class="chart-link" href="https://gabrielatos2026.github.io/AILocalGov/" target="_blank">Explore the Chart &#x2192;</a>
+  </div>
+</section>
+
+<!-- MEDIA -->
+<section id="media">
+  <div class="section-label">Media &amp; Appearances</div>
+  <div class="media-grid">
+
+    <div class="media-card">
+      <div class="media-type">Podcast</div>
+      <h3>Artificial Intelligence and the Stewardship of Time</h3>
+      <p>Episode 311 of The HaltingWinter Podcast with Seth Winterhalter.</p>
+      <div class="media-date">March 26, 2026</div>
+      <div class="media-links">
+        <a class="media-link" href="https://haltingwinter.com/hwp-jerry-gabrielatos/" target="_blank">Episode Page</a>
+        <a class="media-link" href="https://youtu.be/aBTxeZWrpjA" target="_blank">YouTube</a>
+      </div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-type">Interview</div>
+      <h3>Civics Academy with Rich Gruber</h3>
+      <p>A conversation on AI, community engagement, and the future of local government leadership.</p>
+      <div class="media-date">2026</div>
+      <div class="media-links">
+        <a class="media-link" href="https://youtu.be/-ToxwjhpYe4" target="_blank">YouTube</a>
+      </div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-type">Radio</div>
+      <h3>WCLO — Is There Life After Being a City Manager?</h3>
+      <p>A morning radio conversation on AI and how it can be positively applied to how cities operate.</p>
+      <div class="media-date">May 15, 2026</div>
+      <div class="media-links">
+        <a class="media-link" href="https://www.wclo.com/episode/5-15-26-former-beloit-city-manager-jerry-gabrielatos/" target="_blank">Listen</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-note">
+    AI &amp; Local Government &middot; <a href="https://gabrielatos2026.github.io/AILocalGov/">gabrielatos2026.github.io/AILocalGov</a>
+  </div>
+  <div class="footer-note">
+    Made with extensive use of Claude.
+  </div>
+</footer>
+
+</body>
+</html>
