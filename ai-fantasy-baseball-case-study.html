@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blake's Body Shop Fantasy League — A Marriage of Baseball, Behavioral Economics and AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --shop:#3B3733;          /* garage shadow */
+    --shop-deep:#2E2B27;
+    --kraft:#C9A876;         /* corrugated cardboard */
+    --kraft-deep:#B6935F;
+    --poster:#F1EADA;        /* white poster sheet */
+    --tape:#E4C43C;          /* masking tape */
+    --ink:#2B2620;           /* sharpie */
+    --ink-soft:#4A4239;
+    --red:#B5432F;           /* red marker */
+    --chalkline:rgba(43,38,32,.22);
+    --lightline:rgba(241,234,218,.16);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation:none!important;transition:none!important;} }
+  body{background:var(--shop);color:var(--poster);font-family:'IBM Plex Serif',Georgia,serif;font-size:17px;line-height:1.68;}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px;}
+  a{color:var(--tape);}
+  a:focus-visible{outline:2px solid var(--tape);outline-offset:3px;}
+  img{max-width:100%;display:block;}
+
+
+  /* hero */
+  .hero{padding:64px 0 64px;}
+  .hero h1{font-family:'Permanent Marker',cursive;font-size:clamp(34px,5.6vw,60px);line-height:1.12;max-width:820px;}
+  .hero h1 em{font-style:normal;color:var(--tape);}
+  .hero .dek{margin-top:22px;font-size:19px;color:rgba(241,234,218,.85);}
+  .heroimg{margin-top:40px;position:relative;}
+  .heroimg img{width:100%;border:6px solid var(--poster);border-bottom-width:34px;box-shadow:0 14px 40px rgba(0,0,0,.45);}
+  .heroimg figcaption{position:absolute;left:14px;bottom:6px;font-family:'Permanent Marker',cursive;font-size:15px;color:var(--ink);}
+  .scorestrip{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--poster);box-shadow:0 5px 16px rgba(0,0,0,.25);position:relative;}
+  .scorestrip::before{content:"";position:absolute;top:-11px;left:50%;transform:translateX(-50%) rotate(-1.5deg);width:110px;height:24px;background:var(--tape);opacity:.92;}
+  .scorestrip .cell{background:transparent;color:var(--ink);padding:30px 26px 26px;position:relative;text-align:center;}
+  .scorestrip .cell + .cell{border-left:2px solid var(--chalkline);}
+  
+  .scorestrip .lbl{font-family:'IBM Plex Mono',monospace;font-size:14px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px;}
+  .scorestrip .val{font-family:'Permanent Marker',cursive;font-size:64px;line-height:1.05;}
+  .scorestrip .val small{display:block;font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--ink-soft);margin-top:8px;}
+  .scorestrip .cell.now .val{color:var(--red);}
+
+  /* cardboard panel sections */
+  section{padding:34px 0;}
+  .panel{background:var(--kraft);color:var(--ink);padding:52px 48px 44px;position:relative;box-shadow:0 10px 30px rgba(0,0,0,.4);
+    background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.025) 0 2px,transparent 2px 9px);}
+  .panel::before,.panel::after{content:"";position:absolute;top:-12px;width:92px;height:26px;background:var(--tape);opacity:.92;}
+  .panel::before{left:7%;transform:rotate(-3deg);}
+  .panel::after{right:7%;transform:rotate(2.5deg);}
+  .panel.poster{background:var(--poster);background-image:none;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:16px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:14px;font-weight:600;}
+  h2{font-family:'Permanent Marker',cursive;font-size:clamp(28px,4.2vw,42px);line-height:1.12;margin-bottom:20px;}
+  .panel p{margin-bottom:18px;}
+  p.note{font-size:14.5px;color:var(--ink-soft);}
+
+  /* the room photo */
+  .roomimg{margin:8px 0 30px;}
+  .roomimg img{width:100%;border:5px solid var(--poster);box-shadow:0 8px 22px rgba(0,0,0,.3);}
+  .roomimg figcaption{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);margin-top:8px;}
+
+  /* placeholder for Jerry's prose */
+
+  /* 4D lineup card */
+  .lineup{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:32px 0 6px;}
+  .lineup .pos{background:var(--poster);padding:18px 16px;position:relative;box-shadow:0 4px 12px rgba(0,0,0,.18);}
+  .lineup .pos::before{content:"";position:absolute;top:-8px;left:50%;transform:translateX(-50%) rotate(-2deg);width:58px;height:16px;background:var(--tape);opacity:.9;}
+  .lineup .num{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;color:var(--ink-soft);text-transform:uppercase;}
+  .lineup h3{font-family:'Permanent Marker',cursive;font-size:22px;color:var(--ink);margin:4px 0 8px;}
+  .lineup p{font-size:15.5px;margin:0;color:var(--ink-soft);}
+
+
+  .boxscore{background:var(--poster);color:var(--ink);margin:32px 0 10px;overflow-x:auto;box-shadow:0 4px 14px rgba(0,0,0,.18);}
+  .boxscore .bs-head{font-family:'Permanent Marker',cursive;font-size:19px;padding:14px 18px 10px;border-bottom:2px solid var(--ink);}
+  .boxscore table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:13px;min-width:640px;}
+  .boxscore th{font-weight:600;text-align:right;padding:9px 14px;border-bottom:1.5px solid var(--ink);}
+  .boxscore td{text-align:right;padding:8px 14px;border-bottom:1px solid var(--chalkline);}
+  .boxscore th:first-child,.boxscore td:first-child{text-align:left;font-weight:600;}
+  .boxscore .gain{color:#2E6B34;font-weight:600;}
+  .boxscore .risk{color:var(--red);font-weight:600;}
+  .boxscore tr:last-child td{border-bottom:none;}
+
+  .timeline{margin:32px 0 4px;border-left:2px solid var(--chalkline);}
+  .tl-item{padding:0 0 30px 26px;position:relative;}
+  .tl-item:last-child{padding-bottom:4px;}
+  .tl-item::before{content:"";position:absolute;left:-7px;top:7px;width:12px;height:12px;background:var(--kraft);border:2.5px solid var(--red);border-radius:50%;}
+  .tl-date{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
+  .tl-item h3{font-family:'Permanent Marker',cursive;font-size:21px;margin-bottom:8px;}
+  .tl-item p{margin-bottom:0;font-size:16px;}
+  .tl-quote{font-style:italic;color:var(--ink-soft);border-left:3px solid var(--tape);padding-left:14px;margin-top:10px;font-size:17.5px;}
+
+  /* discernment exchanges: scraps of cardboard */
+  .exchange{background:var(--poster);margin:26px 0;position:relative;box-shadow:0 5px 16px rgba(0,0,0,.2);}
+  .exchange::before{content:"";position:absolute;top:-9px;left:26px;width:70px;height:19px;background:var(--tape);opacity:.9;transform:rotate(-2deg);}
+  .exchange .said{padding:18px 22px;}
+  .exchange .said + .said{border-top:2px solid var(--chalkline);}
+  .exchange .who{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px;color:var(--ink-soft);}
+  .exchange .manager blockquote{font-family:'Permanent Marker',cursive;font-size:21px;line-height:1.3;color:var(--ink);}
+  .exchange .machine p{font-size:15px;margin:0;color:var(--ink-soft);}
+
+  /* field notes: white notebook paper */
+  .fieldnotes{background:#FCFCF6;position:relative;margin:32px 0;padding:34px 28px 24px 58px;
+    box-shadow:0 6px 18px rgba(0,0,0,.25);
+    background-image:repeating-linear-gradient(transparent 0 27px, rgba(96,138,190,.38) 27px 28px);}
+  .fieldnotes::before{content:"";position:absolute;top:0;bottom:0;left:40px;width:2px;background:rgba(197,88,80,.55);}
+  .fieldnotes::after{content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-1.5deg);width:88px;height:22px;background:var(--tape);opacity:.92;}
+  .fieldnotes p{color:var(--ink);font-size:15.5px;line-height:28px;margin:0 0 28px;}
+  .fieldnotes p:last-child{margin-bottom:0;}
+  .fieldnotes em{font-family:'Permanent Marker',cursive;font-style:normal;color:var(--red);}
+  .ledger{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0 8px;}
+  .ledger .col{background:var(--poster);padding:22px;box-shadow:0 4px 12px rgba(0,0,0,.18);}
+  .ledger h3{font-family:'Permanent Marker',cursive;font-size:21px;margin-bottom:14px;color:var(--ink);}
+  .ledger .col.human h3{color:var(--red);}
+  .ledger ul{list-style:none;}
+  .ledger li{padding:8px 0;border-bottom:1px solid var(--chalkline);font-size:15px;color:var(--ink);}
+  .ledger li:last-child{border-bottom:none;}
+
+  .chartcard{background:var(--poster);padding:24px 16px 10px;margin:32px 0 10px;box-shadow:0 4px 14px rgba(0,0,0,.18);}
+  .chartcard svg{width:100%;height:auto;display:block;}
+  .legend{display:flex;gap:24px;flex-wrap:wrap;padding:10px 6px 8px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);}
+  .swatch{display:inline-block;width:22px;height:4px;vertical-align:middle;margin-right:8px;}
+
+  footer{padding:40px 0 64px;}
+  footer p{font-size:14.5px;color:rgba(241,234,218,.6);}
+  .sig{font-family:'Permanent Marker',cursive;font-size:16px;color:var(--tape);margin-top:12px;}
+
+  @media (max-width:760px){
+    .panel{padding:44px 22px 36px;}
+    .scorestrip,.lineup{grid-template-columns:1fr;}
+    .scorestrip .cell + .cell{border-left:none;border-top:2px solid var(--chalkline);}
+    .ledger{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap hero">
+  <h1>Blake's Body Shop<br><em>Fantasy League</em></h1>
+  <p class="dek" style="margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.06em;color:rgba(241,234,218,.65);">A 12 person roto league in Albert Lea, MN</p>
+  <p class="dek">A marriage of baseball, behavioral economics and AI. Twelve men picking 300 players, narrative versus numbers, rational versus irrational, over 8.5 hours on a Saturday every March.</p>
+  
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="panel">
+      <div class="eyebrow">Top of the first</div>
+      <h2>The pitch</h2>
+      <figure class="roomimg">
+        <img src="draft-board-room.jpeg" alt="The empty draft room before the auction: twelve hand-labeled cardboard sheets taped along the steel wall of a body shop, folding tables and a shop stool waiting.">
+        <figcaption>The board, before. Twelve columns of cardboard, one per team, taped to the wall of the shop.</figcaption>
+      </figure>
+      <p>I look more forward to our fantasy baseball draft than I do Christmas. Twelve guys, armed to the teeth with stats and chips on the shoulders from last season, bringing in chili and 12-packs to be consumed over the next 8.5 hours, where we auction 120 players, and draft the next 180.</p>
+      <p>Nine years in, I&rsquo;m the newest addition to a league that started when George Bush was President. When I moved to Oregon, I flew back for it. When I moved to Wisconsin, I drove up for it.</p>
+      <p>I figured out how to do it too late in the game. It took six years before I got a spot on the medals podium. Before that, ESPN (the site we use) unceremoniously awarded me a roll of toilet paper for finishing last &ndash; I have a knack for drafting the players most likely to get hurt.</p>
+      <p>I love this day for all the reasons that you&rsquo;d think I&rsquo;d love it. I love baseball. I love traditions. I loved how when in that room, all that mattered was baseball. But, it occurred to me that I love it for another geeky reason: behavioral economics. And more recently, it&rsquo;s become an example of where AI works, where it fails, and a demonstration of how you can&rsquo;t download 76 hours of metadata and years of relationships.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="panel poster">
+      <div class="eyebrow">The dataset that doesn't exist</div>
+      <h2>Seventy-six hours of metadata</h2>
+      <p>Nine drafts. Eight and a half hours each. Somewhere north of seventy-six cumulative hours of watching eleven men make decisions, drink beer and have the time of our lives. Or academically, nine years of field work in behavioral economics that isn’t assigned, nor graded.</p>
+      <p>An auction room is a behavioral economics experiment running live. The first aggressive bid anchors an afternoon of prices. Loss aversion and sunk cost do their best work in the keeper rules: pay heavy for a player one March and his price follows him into the next, so that the carry-over decision quietly stops being "is he worth it" and becomes "I can't let that money have been for nothing." Rosters in this league hold monuments to auctions past. And I delight in those who overpay for starting pitchers, a position that only racks up stats in three of the nine categories we score. Yet the fear of missing the run on arms bids the aces past what their box score can mathematically return.</p>
+      <div class="fieldnotes">
+        <p><em>Fun fact:</em> In a room full of Twins fans, the price is always higher than it should be.</p>
+        <p><em>Fun fact 2:</em> Iron, another guy in the room, always talks about the &ldquo;Steal of the Draft.&rdquo; That sound you&rsquo;re hearing is me patting myself on the back getting Shohei in 2024 for a cheap price. His stat line since then: .295 BA, 128 HR, 287 RBI, 341 R, 85 SB. That&rsquo;s the steal of the decade.</p>
+        <p><em>Fun fact 3:</em> I didn&rsquo;t know Iron&rsquo;s real name &rsquo;til this year.</p>
+      </div>
+      <p>Here is the point that matters for the framework: none of this was ever written down. How do you give an AI the notes that you don’t write over nine years? And what’s more, how do you describe the relationships that exist outside of the body shop?</p>
+      <p>There are no notes, no transcript, no spreadsheet column for "gets loose after the third hour." Seventy-six hours of behavioral data exists in my own neural network. They cannot be pasted, parsed, or uploaded. To borrow from AI parlance, Description, the second D, has a hard boundary, and this is it. What can be described can be delegated. What can't be described can't be — and that, not any philosophy about human dignity, is why the judgment calls stay in the room.</p>
+      <p>The room produces the read, and the relationships that have existed since 1989 are the frameworks through which judgement calls get made in the moment.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="panel poster">
+      <div class="eyebrow">The starting lineup</div>
+      <h2>Four competencies, one season</h2>
+      <p>Baseball and behavioral economics have been teammates for twenty years. <em>Moneyball</em> was never really about baseball — it was about a market mispriced by human bias, and Michael Lewis spent his next book, <em>The Undoing Project</em>, tracing that idea back to Kahneman and Tversky. Every fantasy league is a miniature of the same experiment: a closed market where twelve people price the same assets, and the biases do the mispricing.</p>
+      <p>While I don&rsquo;t use AI in our draft room, I&rsquo;ve used Claude this year to see where I might be able to make a trade and catch up on a slim marginal lead. As I was taking a Claude class &mdash; built on the AI Fluency framework developed by Professors Rick Dakan and Joseph Feller with Anthropic &mdash; I thought it would be cool to show a fun AI use case, and where AI is going to fall short.</p>
+      <div class="lineup">
+        <div class="pos"><div class="num">Batting 1st</div><h3>Delegation</h3><p>Deciding what the machine handles and what stays human.</p></div>
+        <div class="pos"><div class="num">Batting 2nd</div><h3>Description</h3><p>Giving the machine real material — data, rules, constraints — not vibes.</p></div>
+        <div class="pos"><div class="num">Batting 3rd</div><h3>Discernment</h3><p>Judging the output. Catching the errors. Both directions.</p></div>
+        <div class="pos"><div class="num">Cleanup</div><h3>Diligence</h3><p>Verification, honesty about limits, and owning the outcome.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="panel">
+      <div class="eyebrow">The scoreboard</div>
+      <h2>Where I checked in with Claude</h2>
+      <div class="scorestrip" role="group" aria-label="Season standings at each Claude check-in">
+        <div class="cell tapedot"><div class="lbl">May 19 &middot; Standings</div><div class="val">8th<small>52.0 pts</small></div></div>
+        <div class="cell tapedot"><div class="lbl">July 3 &middot; Standings</div><div class="val">3rd<small>69.0 pts</small></div></div>
+        <div class="cell tapedot now"><div class="lbl">July 6 &middot; Standings</div><div class="val">1st<small>tied &middot; 70.5+</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="panel">
+      <div class="eyebrow">D1 &middot; Delegation</div>
+      <h2>The machine finds the mispricing. The human makes the call.</h2>
+      <p>Delegation is deciding whether, when, and how to bring AI into a task — and, just as important, which parts to keep. My league allows one add/drop per move period and trades with eleven other actual humans. That split the season's work cleanly: computation went to the machine, judgment stayed in the room. The recurring job I handed over: scanning eleven rosters for possible trades &mdash; who was quietly selling, what was mispriced, which deals actually moved my categories instead of just shuffling names.</p>
+      <p>The clearest delegation story of the season is a trade the AI never touched:</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">March 22</div>
+          <h3>Machine: surplus and buyer identified</h3>
+          <p>With two closers locked in, the AI flagged Paul Sewald — a late pickup — as a tradeable third saves source, and profiled Team Minnow as the league's most saves-hungry contender in the same conversation.</p>
+          <div class="tl-quote">"You've got three closers and can potentially trade one for value later in the season once other managers get desperate for saves."</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">Late March</div>
+          <h3>Machine: the recommendation is patience</h3>
+          <div class="tl-quote">"Sewald is a sleeper closer — if Merrill Kelly falters in Arizona, Sewald could be a legit saves source. Hold him."</div>
+          <p style="margin-top:10px;">Even that quote needed a little discernment: Merrill Kelly is a starter, not a closer. The hold-him advice was right; the reasoning about Arizona’s bullpen was muddled. Delegation never means taking the machine’s word for the <em>why</em>.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">In season</div>
+          <h3>Human: executed alone</h3>
+          <p>Arizona's bullpen resolved, the market matured, and the deal — Sewald to Minnow for Jesus Luzardo — got made without consulting the AI at all. No transcript of the decision exists because there wasn't one. Timing, negotiation, and the read on the other manager were never delegated. By July, my saves points had held without Sewald, exactly as projected, and Luzardo had deepened a strikeout rotation. <em>Point of Pride:</em> Luzardo is an All-Star, and Sewald is a closer with an ERA of 4.50. Poor Minnow!</p>
+        </div>
+      </div>
+      <p style="margin-top:26px;">The monthly moves tell the same story. In a league that only allows one add/drop a month, every pickup is critical. April’s went to a starter (Landen Roupp) instead of forcing a trade from weakness. May’s went to Brayan Rocchio when injury demanded finding a shortstop. June’s went to Sam Antonacci, who I grabbed to chase steals, but the math showed steals were unwinnable. I’ve kept the player, dropped the plan, but Antonacci remains my best trade chip.</p>
+      <p>That’s what the machine was really for: a second opinion. Left alone, the impulse was to find another trade and churn the roster. More than once the advice was do nothing, and do nothing was right.</p>
+      <div class="ledger">
+        <div class="col machine">
+          <h3>Delegated to the machine</h3>
+          <ul>
+            <li>Parsing standings into verified data</li>
+            <li>Marginal cost of every standings point</li>
+            <li>Flagging mispriced assets and motivated sellers</li>
+            <li>Checking every trade against all nine categories</li>
+          </ul>
+        </div>
+        <div class="col human">
+          <h3>Kept in the room</h3>
+          <ul>
+            <li>League politics: who sells, who bluffs, who holds grudges</li>
+            <li>Keeper economics the data doesn't show</li>
+            <li>When to act, when to wait</li>
+            <li>Negotiating with actual people</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="panel poster">
+      <div class="eyebrow">D2 &middot; Description</div>
+      <h2>Stop describing your team. Hand over the box score.</h2>
+      <p>Description is usually taught as prompting. I described my league in sentences and got back plausible, reputation-based analysis — the machine remembered who players were supposed to be, what the Internet was writing about past performance. Behavioral economists have a name for that: availability bias, judging by what comes easily to mind. It turns out a machine trained on the internet’s opinions has the internet’s biases. It "knew" Kyle Tucker was a star the way a casual fan does, regardless of what Kyle Tucker was hitting (Let’s not talk about how bad Kyle Tucker was hitting). The cure for its bias was the same as the cure for mine: force the actual numbers into the conversation.</p>
+      <p>Description also means constraints. The analysis only got sharp once the machine knew the rules that shape everything: weekly roster locks (bench players produce nothing, so bench pieces are free trade currency), one move per month (no streaming, every pickup is a commitment), and a three-year keeper clock (some stars are rentals, some are franchises — and the difference is invisible in the stats).</p>
+      <p>Well-described data buys computed strategy. This is the weekly report that good description produces:</p>
+      <div class="boxscore">
+        <div class="bs-head">Springfield Zephyrs &middot; Marginal Analysis &middot; Week of July 6</div>
+        <table>
+          <tr><th>Cat</th><th>Value</th><th>Pts</th><th>Next point costs</th><th>Cushion below</th></tr>
+          <tr><td>R</td><td>441</td><td>12</td><td class="gain">— leading —</td><td>13 over Jensen</td></tr>
+          <tr><td>HR</td><td>121</td><td>7.5</td><td class="gain">1 HR (pass Minnow)</td><td class="risk">1 over Hagen</td></tr>
+          <tr><td>RBI</td><td>411</td><td>10</td><td>12 (pass Jensen)</td><td>11 over Hanson</td></tr>
+          <tr><td>SB</td><td>41</td><td>2</td><td>9 (pass Diemer)</td><td class="risk">2 over Bux!</td></tr>
+          <tr><td>AVG</td><td>.2641</td><td>12</td><td class="gain">— leading —</td><td class="risk">.0033 over Bux!</td></tr>
+          <tr><td>K</td><td>573</td><td>8</td><td class="gain">10 K (pass blake)</td><td class="risk">2 over Justin</td></tr>
+          <tr><td>W</td><td>23</td><td>1</td><td class="gain">3 W (pass Jensen)</td><td>— floor —</td></tr>
+          <tr><td>SV</td><td>34</td><td>11</td><td class="gain">4 SV (pass Hanson)</td><td class="risk">1 over Bux!</td></tr>
+          <tr><td>ERA</td><td>3.872</td><td>7</td><td class="gain">0.051 (pass Hanson)</td><td class="risk">0.233 over Dan</td></tr>
+        </table>
+      </div>
+      <p class="note">One home run passes Team Minnow. Nine stolen bases buys almost nothing. No amount of clever prompting produces that sentence — only real data, handled with real rigor.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="panel">
+      <div class="eyebrow">D3 &middot; Discernment</div>
+      <h2>"Check yourself, Claude"</h2>
+      <p>Discernment is judging the machine’s output, and in practice it’s bias-spotting, in both directions. The machine arrives with the internet’s biases: reputation, recency, the tidy story. I arrive with a baseball fan’s obsession. I thought it would be fun to share my conversation with Claude as “we” search how to make the team better.</p>
+
+      <div class="exchange">
+        <div class="said manager"><div class="who">The manager</div><blockquote>"I don't have a lead in SB. I am dead last. Check yourself, Claude."</blockquote></div>
+        <div class="said machine"><div class="who">What the machine had done</div><p>Confused raw stat totals with rotisserie points and built a trade recommendation on a stolen-base "lead" that didn't exist. The correction flipped the entire analysis — and taught a season-long lesson about verifying which numbers are which.</p></div>
+      </div>
+
+      <div class="exchange">
+        <div class="said manager"><div class="who">The manager</div><blockquote>"We get to keep players for three years. This is the first year Blake has Judge. He won't trade him."</blockquote></div>
+        <div class="said machine"><div class="who">What the machine had done</div><p>Built an elegant buy-low case for Aaron Judge — injury discount, motivated seller, perfect category fit — on backwards keeper economics. The endowment effect was the real analysis: a year-one star is a rebuilder's most prized possession, not his surplus, and his owner values him beyond any projection. Rebuilders sell rentals and hold clocks. No dataset contained that; nine years in the room did.</p></div>
+      </div>
+
+      <div class="exchange">
+        <div class="said manager"><div class="who">The manager</div><blockquote>"Look at my OF and 1B. These are strong positions for me."</blockquote></div>
+        <div class="said machine"><div class="who">What the machine had done</div><p>Recommended power bats at positions that weren't broken — solving problems the roster didn't have. Redirected, the analysis collapsed to the real deficit (the left side of the infield) and a much better target.</p></div>
+      </div>
+
+      <div class="exchange">
+        <div class="said manager"><div class="who">The manager</div><blockquote>"I don't see Tony giving him up for any of my SP."</blockquote></div>
+        <div class="said machine"><div class="who">What the machine had done</div><p>Kept escalating a negotiation in a currency the other manager didn't want. The math liked the trade; the manager knew the man — 8.5 hours a year, for years. League politics ended the conversation the spreadsheet couldn't.</p></div>
+      </div>
+
+      <p>And the loop runs the other way, because the manager has biases too. Mid-race, deal-hungry, I floated trading Antonacci to my closest rival for Max Muncy — a classic case of wanting a trade more than wanting its consequences. The machine caught it: the deal would hand first place the stolen bases and batting average points sitting on my two thinnest cushions — up to a four-point net swing to the one team I'm racing, financed by me. The room checks the machine's biases; the math checks the room's.</p>
+      <p class="note">The pattern across every exchange: treat the first answer as an opening bid. The tool got dramatically better the moment I stopped being polite to it.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="panel poster">
+      <div class="eyebrow">D4 &middot; Diligence</div>
+      <h2>Showing that it works</h2>
+      <p>Diligence is the simplest D: show that it’s working. The not so humble brag shows me in first place in the standings. The chart below is the season plotted at the three points I checked in with Claude: 8th in May, 3rd in early July, tied for 1st three days later. Three check-ins make a line to show the progress.</p>
+      <div class="chartcard">
+        <svg viewBox="0 0 900 380" role="img" aria-label="Line chart of league standings totals across May 19, July 3, and July 6. The Springfield Zephyrs rise from 52 to 70.5 points while several early leaders decline.">
+          <g stroke="rgba(43,38,32,.15)" stroke-width="1">
+            <line x1="60" y1="40" x2="840" y2="40"/><line x1="60" y1="115" x2="840" y2="115"/>
+            <line x1="60" y1="190" x2="840" y2="190"/><line x1="60" y1="265" x2="840" y2="265"/>
+            <line x1="60" y1="340" x2="840" y2="340"/>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="12" fill="rgba(43,38,32,.55)">
+            <text x="52" y="44" text-anchor="end">80</text><text x="52" y="119" text-anchor="end">65</text>
+            <text x="52" y="194" text-anchor="end">50</text><text x="52" y="269" text-anchor="end">35</text>
+            <text x="52" y="344" text-anchor="end">20</text>
+            <text x="60" y="368">MAY 19</text><text x="791" y="368" text-anchor="middle">JUL 3</text><text x="840" y="368" text-anchor="end">JUL 6</text>
+          </g>
+          <g fill="none" stroke="rgba(43,38,32,.25)" stroke-width="1.5">
+            <polyline points="60,77.5 791,122.5 840,87.5"/>
+            <polyline points="60,90 791,105 840,90"/>
+            <polyline points="60,90 791,82.5 840,107.5"/>
+            <polyline points="60,195 791,160 840,142.5"/>
+            <polyline points="60,127.5 791,145 840,157.5"/>
+            <polyline points="60,185 791,187.5 840,160"/>
+            <polyline points="60,65 791,122.5 840,167.5"/>
+            <polyline points="60,87.5 791,210 840,197.5"/>
+            <polyline points="60,330 791,275 840,245"/>
+            <polyline points="60,185 791,207.5 840,245"/>
+          </g>
+          <polyline points="60,157.5 791,67.5 840,82.5" fill="none" stroke="#B5432F" stroke-width="2.25"/>
+          <polyline points="60,180 791,95 840,87.5" fill="none" stroke="#2B2620" stroke-width="4"/>
+          <g fill="#2B2620"><circle cx="60" cy="180" r="5"/><circle cx="791" cy="95" r="5"/><circle cx="840" cy="87.5" r="5"/></g>
+          <g fill="#B5432F"><circle cx="60" cy="157.5" r="3.5"/><circle cx="791" cy="67.5" r="3.5"/><circle cx="840" cy="82.5" r="3.5"/></g>
+          <g font-family="Permanent Marker, cursive" font-size="17">
+            <text x="66" y="207" fill="#2B2620">ZEPHYRS &middot; 52</text>
+            <text x="836" y="70" text-anchor="end" fill="#2B2620">70.5</text>
+            <text x="66" y="148" fill="#B5432F">BUX! &middot; 56.5</text>
+          </g>
+        </svg>
+        <div class="legend">
+          <span><span class="swatch" style="background:#2B2620;"></span>Springfield Zephyrs</span>
+          <span><span class="swatch" style="background:#B5432F;"></span>More Bang for your Bux! (closest rival)</span>
+          <span><span class="swatch" style="background:rgba(43,38,32,.25);"></span>The other ten</span>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="panel">
+      <div class="eyebrow">Final score</div>
+      <h2>Baseball, behavioral economics and AI</h2>
+      <p>I think that the behavioral economists Kahneman and Tversky, Thaler and Sunstein would appreciate the checks that AI provides to my built-in biases. It took a nudge from <a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency: Framework &amp; Foundations</a>, from Anthropic and Professors Dakan and Feller, to see the way these things intertwine.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>All standings, statistics, quotes, and trade details are real, drawn from the 2026 season of a 12-team ESPN rotisserie keeper league and the author's actual AI conversation transcripts. Photographs by the author, from draft day at the shop. Analysis produced in collaboration with Claude (Anthropic); every decision, and every correction, by the author.</p>
+    <div class="sig">Jerry Gabrielatos &middot; 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
