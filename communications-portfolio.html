@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building an Audience for Local Government — Jerry Gabrielatos</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #5a5a5a;
+    --line: #e3e3e3;
+    --accent: #1f5f4a;
+    --accent-light: #eaf3ef;
+    --bg: #fdfdfb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+  nav.top {
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+  }
+  nav.top .wrap { display: flex; justify-content: space-between; align-items: center; }
+  nav.top .brand { font-weight: 700; text-decoration: none; color: var(--ink); font-size: 15px; }
+  nav.top .links a { color: var(--muted); text-decoration: none; margin-left: 22px; font-size: 14px; }
+  nav.top .links a:hover { color: var(--ink); }
+
+  header.hero {
+    padding: 64px 0 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-size: 38px;
+    line-height: 1.15;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .subhead { font-size: 20px; color: var(--muted); max-width: none; margin: 0 0 22px; }
+  .byline { font-size: 14px; color: var(--muted); }
+
+  .hero-img { width: 100%; max-width: 480px; border-radius: 6px; margin: 32px auto 8px; display: block; }
+  .caption { font-size: 13px; color: var(--muted); font-style: italic; margin-top: 6px; }
+
+  section { padding: 52px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+
+  .section-label {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  h2 { font-size: 26px; margin: 0 0 16px; letter-spacing: -0.01em; }
+  p { font-size: 16px; margin: 0 0 16px; }
+
+  .result-box {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    background: var(--accent-light);
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin: 24px 0;
+  }
+  .result-stat { font-size: 42px; font-weight: 800; color: var(--accent); line-height: 1; }
+  .result-label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-top: 4px; }
+  .result-text { font-size: 15px; color: var(--ink); }
+
+  .img-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0; }
+  .img-grid.two { grid-template-columns: repeat(2, 1fr); }
+  .img-grid img { width: 100%; border-radius: 6px; display: block; aspect-ratio: 4/3; object-fit: cover; }
+  .img-grid figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  figure { margin: 0; }
+
+  .quote-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .quote-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .quote-card img { width: 100%; display: block; height: 260px; object-fit: contain; object-position: center; background: #f4f4f2; }
+  .quote-card .cap { padding: 10px 12px; font-size: 13px; color: var(--muted); }
+
+  .principles { counter-reset: p; margin: 20px 0; }
+  .principle { display: flex; gap: 18px; padding: 18px 0; border-top: 1px solid var(--line); }
+  .principle:first-child { border-top: none; }
+  .principle .num {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--accent);
+    min-width: 40px;
+  }
+  .principle h3 { margin: 0 0 4px; font-size: 20px; }
+  .principle p { margin: 0; font-size: 17px; color: var(--muted); }
+
+  .callout {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    padding: 20px 24px;
+    border-radius: 4px;
+    margin: 24px 0;
+    font-size: 18px;
+  }
+
+  footer { padding: 40px 0 64px; text-align: center; color: var(--muted); font-size: 13px; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 28px; }
+    .img-grid, .img-grid.two, .quote-strip { grid-template-columns: 1fr 1fr; }
+    .result-box { flex-direction: column; align-items: flex-start; gap: 8px; }
+    nav.top .links a { margin-left: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Jerry Gabrielatos</a>
+    <div class="links">
+      <a href="index.html">← AI &amp; Local Government</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Building an Audience for Local Government</h1>
+    <p class="subhead">Social media was not the objective. Reach was. In Albert Lea, we built campaigns residents chose to follow: humor, internet trends, buy-in from community leaders, photography that showed off the city's beauty. The result was more than followers, it was civic pride, real engagement, and greater awareness of what the city was actually doing.</p>
+    <img class="hero-img" src="images/hero-pool-guy.jpg" alt="The Pool Guy, sitting on a cooler in the snow next to a Beach Closed sign, waiting for the municipal pool to open.">
+    <p class="caption" style="font-size: 16px; font-style: normal; text-align: center;">"The Pool Guy" — a running joke about someone a little too eager for summer to start. It became the city's most recognizable communications tool.</p>
+  </div>
+</header>
+
+<section id="strategy">
+  <div class="wrap">
+    <div class="section-label">The Strategy</div>
+    <h2>Give people a reason to follow.</h2>
+    <p>As the manager overseeing communications, I helped develop a more human voice: humor, recurring characters, community personalities, strong local photography, paired with traditional government information.</p>
+
+    <div class="result-box">
+      <div>
+        <div class="result-stat">2x</div>
+        <div class="result-label">Social Following</div>
+      </div>
+      <div class="result-text">The city doubled its social media following during my tenure. The work was later covered by local news stations and presented at statewide communications conferences.</div>
+    </div>
+
+    <div class="section-label" style="margin-top: 32px;">External Validation</div>
+    <p>The campaigns got noticed beyond city hall. In addition to local news coverage, the approach was presented to peers at the Minnesota Association of Government Communicators Conference as well as at a regional social media event.</p>
+
+    <div class="img-grid two">
+      <figure>
+        <img src="images/conference-presenting.jpg" alt="Presenting at the Minnesota Association of Government Communicators Conference.">
+      </figure>
+      <figure>
+        <img src="images/breakfast-flyer.jpg" alt="Promotional flyer for a session on how the city doubled its social media following using humor.">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="audience-building">
+  <div class="wrap">
+    <div class="section-label">Audience Building</div>
+    <h2>Government can sound human.</h2>
+    <p>We leaned into internet trends when they fit the city, giving it a way to join conversations residents were already having online. The point was never to chase every meme. It was to make the city's voice recognizable, current, and worth following, including with recurring text-message-style humor that leadership itself participated in.</p>
+
+    <div class="section-label" style="margin-top: 28px;">Leveraging Internet Trends</div>
+    <div class="img-grid two">
+      <figure>
+        <img src="images/trend-bernie-mittens.jpg" alt="The viral 'Bernie Sanders mittens' meme, photoshopped into a local lake access sign, adapted for the city's own audience." style="aspect-ratio: 4/3; object-fit: contain; background: #f4f4f2;">
+        <figcaption>The viral "Bernie Sanders mittens" moment, made local: dropped right into a city lake-access sign residents would recognize.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/result-social-icons.jpg" alt="Collage of LinkedIn, Facebook, Instagram and Tinder icons over photos of the city, representing the channels the social strategy grew across.">
+        <figcaption>The strategy grew a following across every major platform residents were already using, LinkedIn and Facebook to Instagram, even Tinder.</figcaption>
+      </figure>
+    </div>
+
+    <div class="section-label" style="margin-top: 28px;">Recurring Text-Message Humor</div>
+    <div class="quote-strip">
+      <div class="quote-card">
+        <img src="images/text-fountain.jpg" alt="Text message screenshot referencing 9,000 attendees at a downtown summer concert series.">
+        <div class="cap">A celebrity joke pointed back to 9,000+ attendees at the city's Thursday summer concert series.</div>
+      </div>
+      <div class="quote-card">
+        <img src="images/text-retail-therapy.jpg" alt="Text message screenshot promoting a local business on Small Business Saturday.">
+        <div class="cap">The same recurring format drew attention to Black Friday and Small Business Saturday.</div>
+      </div>
+      <div class="quote-card">
+        <img src="images/text-tuesday.jpg" alt="Text message exchange with the city manager, showing organizational buy-in for the voice.">
+        <div class="cap">An actual exchange with the City Manager showed the voice had organizational buy-in.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="recurring-character">
+  <div class="wrap">
+    <div class="section-label">Recurring Character</div>
+    <h2>A joke became a communications tool.</h2>
+    <p>"The Pool Guy" began as a running joke about someone a little too eager for the municipal pool to open. Once residents recognized the character, we used that recognition to draw attention to city priorities, from major event promotion to routine public safety reminders.</p>
+
+    <div class="img-grid">
+      <figure>
+        <img src="images/signs-mngeo-openpool.jpg" alt="Two residents holding handmade signs referencing a statewide event and the pool opening.">
+        <figcaption>Major event promotion, tied back to the recurring character.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/signs-bridge.jpg" alt="Resident holding a handmade sign about a state bonding priority.">
+        <figcaption>State bonding priorities, made local and personal.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/signs-raisetheroad.jpg" alt="Resident holding a handmade sign about a road infrastructure priority.">
+        <figcaption>Infrastructure priorities, carried by a familiar face.</figcaption>
+      </figure>
+    </div>
+
+    <p>We brought in the Albert Lea Community Theatre to add humor to routine notices, so residents paid attention instead of scrolling past.</p>
+
+    <div class="img-grid two">
+      <figure>
+        <img src="images/pedestrian-safety.jpg" alt="An Abbey Road-style photo of residents crossing a street, used for a pedestrian safety campaign.">
+        <figcaption>An Abbey Road-style image turned a routine pedestrian-safety reminder into something people stopped to notice.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/mosquito-spraying.jpg" alt="A person in costume promoting a seasonal mosquito spraying notice.">
+        <figcaption>A recurring seasonal notice, made memorable with a local theatre partner.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/clear-hydrants.jpg" alt="The recurring character shoveling snow around a fire hydrant, for a winter public-safety reminder." style="aspect-ratio: 3/4; object-fit: contain; background: #f4f4f2;">
+        <figcaption>The Pool Guy helped turn a routine winter public-safety reminder into engaging content.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/summer-hockey.jpg" alt="A person playing street hockey on a dock in summer, referencing the city's recurring characters." style="aspect-ratio: 3/4; object-fit: contain; background: #f4f4f2;">
+        <figcaption>Not every post needed a policy objective. The "anti-Pool Guy" wanted to play hockey in summer.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="employee-storytelling">
+  <div class="wrap">
+    <div class="section-label">Employee Storytelling</div>
+    <h2>"Best job in the city."</h2>
+    <p>We used employee features to show the panorama of municipal work, recognize staff, and help prospective applicants imagine themselves in city careers. The series served two audiences at once: employees saw their work valued publicly, and potential applicants saw that municipal government offered far more kinds of jobs than they may have realized.</p>
+
+    <div class="img-grid two">
+      <figure>
+        <img src="images/employee-lab.jpg" alt="A city employee working in a water testing laboratory." style="aspect-ratio: 3/4; object-fit: contain; background: #f4f4f2;">
+        <figcaption>Laboratory</figcaption>
+      </figure>
+      <figure>
+        <img src="images/employee-icearena.jpg" alt="An empty municipal ice arena, part of the city's recreation facilities." style="aspect-ratio: 3/4; object-fit: cover;">
+        <figcaption>Ice arena</figcaption>
+      </figure>
+    </div>
+    <figure style="max-width: 340px; margin: 14px auto 0;">
+      <img src="images/employee-grounds.jpg" alt="A city employee mowing a public grounds area." style="width:100%; aspect-ratio: 3/4; object-fit: cover; border-radius:6px; display:block;">
+      <figcaption class="caption" style="text-align:center;">Grounds</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="campaign">
+  <div class="wrap">
+    <div class="section-label">Campaign Participation</div>
+    <h2>Make the Census a community campaign.</h2>
+    <p>For the 2020 Census, The Pool Guy turned into the "Census Nerd," turning a federal participation message into something recognizably local, with local leaders, visual gags and inside jokes that made the campaign feel like it belonged to the community rather than a mailer from Washington.</p>
+
+    <div class="img-grid">
+      <figure>
+        <img src="images/census-count.jpg" alt="Local leaders posing for a photo as part of a literal count campaign for the Census.">
+        <figcaption>The County Administrator joins a literal "count" of recognizable community leaders.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/census-pencil.jpg" alt="A person holding a giant pencil prop for the Census participation campaign.">
+        <figcaption>A giant pencil gave the Mayor a visual hook for the message.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/census-poolguy.jpg" alt="The Pool Guy character used to promote Census participation ahead of a summer event.">
+        <figcaption>The recurring character set up the joke months ahead, riffing on how early residents claim parade spots.</figcaption>
+      </figure>
+    </div>
+    <figure style="max-width: 480px; margin: 0 auto;">
+      <img src="images/census-mayor.jpg" alt="The mayor speaking at a public meeting while wearing a Census Nerd campaign shirt." style="width:100%; border-radius:6px; display:block;">
+      <figcaption class="caption" style="text-align:center; font-style: normal;">The mayor wore the campaign shirt at a public meeting, reinforcing the message well beyond a single post.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="place-branding">
+  <div class="wrap">
+    <div class="section-label">Place Branding</div>
+    <h2>Sometimes the city itself was the message.</h2>
+    <p>The city's channels also showcased its lakes, trails and downtown, reinforcing community pride and presenting the city as a place worth visiting, living and investing in.</p>
+
+    <div class="img-grid two">
+      <figure>
+        <img src="images/place-sunset.jpg" alt="A sunrise over a lake dock in the city.">
+        <figcaption>Lakefront, at dawn.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/place-trail.jpg" alt="A wooded trail through a city park.">
+        <figcaption>Trail system.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/place-downtown-night.jpg" alt="A downtown storefront lit up at night.">
+        <figcaption>Downtown, after hours.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/place-downtown-day.jpg" alt="A historic downtown building and Main Street storefronts.">
+        <figcaption>Main Street, by day.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="how-i-manage">
+  <div class="wrap">
+    <div class="section-label">How I Manage Communications</div>
+    <h2>The tactics should fit the community. The management principles travel.</h2>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="num">1</div>
+        <div>
+          <h3>Earn attention before you need it</h3>
+          <p>Posting information is not the same as reaching people.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="num">2</div>
+        <div>
+          <h3>Build a voice that fits the community</h3>
+          <p>Local humor works because it sounds local, not borrowed.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="num">3</div>
+        <div>
+          <h3>Invite the organization into the work</h3>
+          <p>Managers, elected officials, employees and community partners all participated.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="num">4</div>
+        <div>
+          <h3>Use creativity in service of real objectives</h3>
+          <p>Recruitment, safety, Census participation, events and legislative priorities all benefited.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="num">5</div>
+        <div>
+          <h3>Measure, learn and adapt</h3>
+          <p>The goal is not a clever post. The goal is an audience you can reach when it matters.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      What worked in one city was distinctly that city's own. The tactics don't transfer wholesale, and shouldn't. What travels is the approach: understand the audience, build the organizational voice with staff, invite participation, and use the reach you earn to advance the priorities that matter most.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Jerry Gabrielatos · <a href="index.html">AI &amp; Local Government</a> · <a href="mailto:jerry.gabrielatos@gmail.com">jerry.gabrielatos@gmail.com</a>
+  </div>
+</footer>
+
+</body>
+</html>
