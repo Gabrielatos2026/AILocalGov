@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Satellite City Hall | Jerry Gabrielatos</title>
+<meta name="description" content="Satellite City Hall: how Beloit's city manager took City Hall to grocery stores, barbershops and the farmers' market to meet residents where they are.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #5a5a5a;
+    --line: #e3e3e3;
+    --accent: #1f4e79;
+    --accent-light: #eaf1f8;
+    --bg: #fdfdfb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+
+  header.hero { padding: 64px 0 44px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px;
+    color: var(--accent); font-weight: 700; margin-bottom: 14px;
+  }
+  h1 { font-size: 38px; line-height: 1.15; margin: 0 0 14px; letter-spacing: -0.01em; }
+  .subhead { font-size: 20px; color: var(--muted); margin: 0 0 22px; }
+
+  .hero-fig { margin: 32px auto 0; max-width: 480px; }
+  .hero-img { width: 100%; border-radius: 6px; display: block; }
+  .caption { font-size: 15px; color: var(--muted); text-align: center; margin-top: 8px; }
+
+  .lead-quote {
+    margin: 36px 0 0; padding: 28px 30px; background: var(--accent-light);
+    border-left: 4px solid var(--accent); border-radius: 4px;
+  }
+  .lead-quote blockquote { margin: 0; font-size: 26px; line-height: 1.3; font-weight: 700; letter-spacing: -0.01em; }
+  .lead-quote .lead-follow { margin: 10px 0 0; font-size: 18px; font-style: italic; color: var(--ink); }
+  .lead-quote cite { display: block; margin-top: 12px; font-style: normal; font-size: 14px; color: var(--muted); }
+
+  section { padding: 52px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  .section-label {
+    text-transform: uppercase; letter-spacing: 0.1em; font-size: 15px;
+    font-weight: 700; color: var(--accent); margin-bottom: 10px;
+  }
+  h2 { font-size: 26px; margin: 0 0 16px; letter-spacing: -0.01em; }
+  p { font-size: 16px; margin: 0 0 16px; }
+
+  .img-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0 24px; }
+  .img-grid img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 6px; display: block; }
+  .img-grid img.contain { object-fit: contain; background: #f4f4f2; }
+  .img-grid figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  figure { margin: 0; }
+
+  .note { font-size: 14px; color: var(--muted); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 24px 0; }
+  .card { border: 1px solid var(--line); border-radius: 8px; background: #fff; padding: 20px 22px; }
+  .card h3 { margin: 0 0 6px; font-size: 18px; }
+  .card p { margin: 0; font-size: 15px; color: var(--muted); }
+
+  .quotes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 24px 0; }
+  .q { border: 1px solid var(--line); border-radius: 8px; background: #fff; padding: 22px 22px 18px; display: flex; flex-direction: column; }
+  .q blockquote { margin: 0 0 14px; font-size: 19px; line-height: 1.35; font-weight: 600; }
+  .q .src { margin-top: auto; font-size: 13px; color: var(--muted); }
+  .q.wide { grid-column: 1 / -1; }
+
+  .timeline { margin: 22px 0; border-left: 2px solid var(--accent); padding-left: 22px; }
+  .tl { position: relative; padding: 0 0 22px; }
+  .tl::before {
+    content: ""; position: absolute; left: -29px; top: 6px; width: 12px; height: 12px;
+    border-radius: 50%; background: var(--bg); border: 2px solid var(--accent);
+  }
+  .tl:last-child { padding-bottom: 0; }
+  .tl:last-child::before { background: var(--accent); }
+  .tl .where { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; color: var(--accent); }
+  .tl h3 { margin: 2px 0 4px; font-size: 18px; }
+  .tl p { margin: 0; font-size: 15px; color: var(--muted); }
+
+  .listen {
+    display: flex; gap: 22px; align-items: center; background: var(--accent-light);
+    border-radius: 8px; padding: 22px 26px; margin: 24px 0;
+  }
+  .listen .icon {
+    flex: 0 0 56px; height: 56px; border-radius: 50%; background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .listen .icon span { display: block; width: 0; height: 0; border-left: 18px solid #fff; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 5px; }
+  .listen h3 { margin: 0 0 4px; font-size: 18px; }
+  .listen p { margin: 0; font-size: 15px; }
+
+  .principle { display: flex; gap: 18px; padding: 18px 0; border-top: 1px solid var(--line); }
+  .principle:first-child { border-top: none; }
+  .principle .num { font-size: 26px; font-weight: 800; color: var(--accent); min-width: 40px; }
+  .principle h3 { margin: 0 0 4px; font-size: 20px; }
+  .principle p { margin: 0; font-size: 17px; color: var(--muted); }
+
+  .callout {
+    background: var(--accent-light); border-left: 3px solid var(--accent);
+    padding: 20px 24px; border-radius: 4px; margin: 24px 0; font-size: 18px;
+  }
+
+  .sources { font-size: 14px; color: var(--muted); padding-left: 18px; }
+  .sources li { margin-bottom: 6px; }
+
+
+  @media (max-width: 640px) {
+    h1 { font-size: 28px; }
+    .lead-quote blockquote { font-size: 21px; }
+    .two-col, .quotes { grid-template-columns: 1fr; }
+    .img-grid { grid-template-columns: 1fr 1fr; }
+    .listen { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ===== Shared site shell (matches homepage) ===== */
+  body {
+    background: #f8f9ff;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #1a1a2e;
+  }
+  p { font-size: 18px; }
+  h1, h2 { font-family: 'DM Serif Display', serif; font-weight: 400; letter-spacing: -0.01em; }
+  h1 { font-size: clamp(2.6rem, 6vw, 3.8rem); line-height: 1.05; }
+  h2 { font-size: 1.9rem; line-height: 1.2; }
+  h3 { font-family: 'Source Serif 4', Georgia, serif; font-weight: 600; }
+  .eyebrow, .section-label, .result-label, .note, figcaption, .caption, .src, cite, .where {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .eyebrow { font-size: 0.8rem; letter-spacing: 0.15em; font-weight: 400; }
+  .section-label {
+    font-size: 0.9rem; letter-spacing: 0.15em; font-weight: 400;
+    display: flex; align-items: center; gap: 16px; margin-bottom: 18px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: #e0e7ff; }
+  figcaption, .caption, .src, cite, .note { font-size: 0.8rem; line-height: 1.55; }
+  .subhead { font-family: 'DM Serif Display', serif; font-style: italic; font-size: clamp(1.1rem, 2.5vw, 1.4rem); line-height: 1.45; }
+  header.hero, section { border-bottom-color: #e0e7ff; }
+
+  nav.site {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(248,249,255,0.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e0e7ff;
+    padding: 0 40px; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  nav.site .nav-brand {
+    font-family: 'IBM Plex Mono', monospace; font-size: 1rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent); font-weight: 600; text-decoration: none;
+  }
+  nav.site .nav-links { display: flex; align-items: center; gap: 24px; list-style: none; margin: 0; padding: 0; }
+  nav.site .nav-links a {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #6b7280; text-decoration: none; transition: color 0.2s;
+  }
+  nav.site .nav-links a:hover, nav.site .nav-links a.active { color: var(--accent); }
+  nav.site .nav-divider { width: 1px; height: 20px; border-left: 1px solid #c7cdf5; }
+
+  footer.site {
+    max-width: 900px; margin: 0 auto; padding: 40px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+    border-top: 1px solid #e0e7ff; text-align: left;
+  }
+  footer.site .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: #6b7280; }
+  footer.site a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    nav.site { flex-wrap: wrap; height: auto; padding: 12px 20px; gap: 8px; }
+    nav.site .nav-links { flex-wrap: wrap; gap: 8px 16px; }
+    nav.site .nav-links a { font-size: 0.75rem; }
+    nav.site .nav-divider { flex-basis: 100%; height: 0; border-left: none; }
+    footer.site { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site">
+  <a class="nav-brand" href="index.html">Jerry Gabrielatos</a>
+  <ul class="nav-links">
+    <li><a href="index.html#article">Article</a></li>
+    <li><a href="index.html#chart">The Chart</a></li>
+    <li><a href="index.html#media">Media</a></li>
+    <li class="nav-divider" aria-hidden="true"></li>
+    <li><a href="satellite-city-hall.html" class="active" aria-current="page">Satellite City Hall</a></li>
+    <li><a href="communications-portfolio.html">Communications Work</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Beloit, Wisconsin &middot; 2023 to 2025</div>
+    <h1>Satellite City Hall</h1>
+    <p class="subhead">A table, a city banner and a Saturday morning. As city manager, I took City Hall out of City Hall: to grocery stores, a barbershop, a pharmacy, the farmers' market and neighborhood cleanups, so residents could raise a concern, request a service or just get to know the person running their city.</p>
+
+    <figure class="hero-fig">
+      <img class="hero-img" src="satellite-piggly-wiggly.jpg" alt="Jerry Gabrielatos and then-City Council President Regina Dunkin standing beside a table with a City of Beloit Satellite City Hall banner inside Piggly Wiggly.">
+      <figcaption class="caption">At Piggly Wiggly with Regina Dunkin, then President of the Beloit City Council.</figcaption>
+    </figure>
+
+    <div class="lead-quote">
+      <blockquote>"Gabrielatos deserves praise for seeking out the people."</blockquote>
+      <p class="lead-follow">"Manager Gabrielatos has set an excellent example. Let's see who follows."</p>
+      <cite>Beloit Daily News editorial, "Removing barriers for citizen outreach," July 31, 2024 &middot; <a href="https://www.beloitdailynews.com/opinion/removing-barriers-for-citizen-outreach/article_66a47db6-4cdd-11ef-aebc-636e7cbd1118.html" target="_blank" rel="noopener">Read the editorial</a></cite>
+    </div>
+  </div>
+</header>
+
+<section id="idea">
+  <div class="wrap">
+    <div class="section-label">The Idea</div>
+    <h2>Meet people where they are.</h2>
+    <p>Most residents will never come to a council meeting or walk into City Hall. Plenty of them still have something to say. Satellite City Hall flipped the burden: instead of asking residents to come to the city, I went to them, meeting them at the places they were already going.</p>
+    <p>Some people came on purpose. Others were just running errands and stopped because they saw the banner. Some of those accidental conversations turned out to be the most valuable ones. I met a wonderful mix of people who may not have been comfortable at City Hall, most of whom I would not have met otherwise.</p>
+
+    <p>The City announced each session with a simple promise: "City Hall is coming to the people!"</p>
+
+    <p>Satellite City Halls were a running part of my tenure with the City of Beloit.</p>
+  </div>
+</section>
+
+<section id="where">
+  <div class="wrap">
+    <div class="section-label">Where We Went</div>
+    <h2>The barbershop, the grocery store, the farmers' market.</h2>
+    <p>Beloit is one of the most diverse cities in Wisconsin. About 12% of residents are Black and 20% are Latino. A city government that only hears from the people who come to City Hall misses much of that community.</p>
+    <p>So locations were chosen to reach residents who don't usually show up at City Hall, including a Latino-owned grocery store and a Black-owned barbershop.</p>
+    <p>Geography mattered too. Residents on Beloit's west side have often felt overlooked by City Hall, so sessions deliberately rotated between both sides of the city. Showing up on the west side, again and again, sent a message that a mailer never could.</p>
+
+    <div class="img-grid">
+      <figure>
+        <img src="satellite-barbershop.jpg" alt="Jerry Gabrielatos, seen from behind, in conversation with a group of residents seated at Clippers and Curls barbershop, with a wall of photos behind them.">
+        <figcaption>At Clippers and Curls, the conversation came to the regulars.</figcaption>
+      </figure>
+      <figure>
+        <img src="satellite-walgreens-winter.jpg" alt="Jerry Gabrielatos standing inside Walgreens on a winter Satellite City Hall morning.">
+        <figcaption>A winter Saturday at Walgreens on Madison Road.</figcaption>
+      </figure>
+      <figure>
+        <img class="contain" src="satellite-flyer-walgreens.jpg" alt="City of Beloit flyer announcing Satellite City Hall on Saturday, July 26, 10 to 11:30 a.m., at Walgreens, 1531 Madison Road.">
+        <figcaption>The City's flyer for the July 26, 2025 session.</figcaption>
+      </figure>
+    </div>
+
+    <p>Residents who couldn't make a session were pointed to the City's online service request system, so every session also promoted a channel that worked the rest of the year.</p>
+  </div>
+</section>
+
+<section id="what-we-heard">
+  <div class="wrap">
+    <div class="section-label">What We Heard</div>
+    <h2>A mix of the immediate and the long term.</h2>
+    <p>At each session I took service requests on the spot and talked with residents about the city. Seeing a city official in person jogs people's memories about something that's been bothering them, sometimes for years.</p>
+
+    <div class="two-col">
+      <div class="card">
+        <h3>One-off service requests</h3>
+        <p>Potholes, trouble paying bills online, a problem on a specific block. Concerns I wouldn't have heard about if I hadn't set up the table, and that could be routed to staff right away.</p>
+      </div>
+      <div class="card">
+        <h3>Long-term community issues</h3>
+        <p>Housing, neighborhood conditions and the direction of the city. Hearing both kinds of concerns side by side informed how the city allocated its resources.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      "It provides a level of interactiveness I don't get sitting at the desk."
+      <div class="note" style="margin-top: 8px;">Speaking to the Beloit Daily News after a Walgreens session, January 2024</div>
+    </div>
+  </div>
+</section>
+
+<section id="relationships">
+  <div class="wrap">
+    <div class="section-label">Relationships</div>
+    <h2>The table was a town square.</h2>
+    <p>A community member once told me I was like a ribbon running through the community. It's perhaps the highest compliment I received in this work, and I earned it one Saturday morning at a time. The owner of one store eventually invited me to his daughter's quincea&ntilde;era. That doesn't happen because a city sends a translated mailer. It happens because a relationship gets built.</p>
+    <p>Satellite City Hall was part of a broader effort to build relationships with residents who had historically been underrepresented in city decision-making, including expanding the City's engagement with Beloit's Latino community, roughly a fifth of the city. In 2025, Rock County Administrator John Light began co-hosting sessions, so residents could raise city and county concerns at the same table.</p>
+  </div>
+</section>
+
+<section id="recognition">
+  <div class="wrap">
+    <div class="section-label">What Others Said</div>
+    <h2>Recognized by the council, the press and the profession.</h2>
+
+    <div class="quotes">
+      <div class="q">
+        <blockquote>"This is Jerry's superpower, connecting with Beloiters."</blockquote>
+        <div class="src">Beloit City Council member. The council rated me as exceeding expectations in community relations.</div>
+      </div>
+      <div class="q">
+        <blockquote>"Energetic, creative, open and responsive to citizens."</blockquote>
+        <div class="src">Beloit Daily News editorial, <a href="https://www.beloitdailynews.com/opinion/opinion-five-solid-people-seeking-city-posts/article_4d11696c-0101-11f0-95f2-a74ba7cdd9b5.html" target="_blank" rel="noopener">"Five solid people seeking city posts,"</a> March 19, 2025, noting I regularly took the show on the road for listening sessions.</div>
+      </div>
+      <div class="q">
+        <blockquote>"I think it's critical to meet people where they are."</blockquote>
+        <div class="src">Speaking to <a href="https://www.channel3000.com/news/beloit-city-manager-to-host-satellite-city-hall/article_fc7c6ac2-49c4-11ef-997f-3b21f5ae098d.html" target="_blank" rel="noopener">Channel 3000 (WISC-TV)</a> ahead of the Farmers' Market session, July 2024</div>
+      </div>
+      <div class="q">
+        <blockquote>A model for the next manager.</blockquote>
+        <div class="src">When I left, a December 2025 Beloit Daily News editorial said I would be remembered for energy, enthusiasm and outreach. In spring 2026, the paper's advice to my successor pointed to the practice of holding hours in neighborhoods across the city.</div>
+      </div>
+    </div>
+
+    <div class="listen">
+      <div class="icon" aria-hidden="true"><span></span></div>
+      <div>
+        <h3>Hear it from me: "Bringing City Hall to Your Doorstep"</h3>
+        <p>On Episode 111 of The HaltingWinter Podcast, a show for city managers and local leaders, I talked with host Seth Winterhalter about where Satellite City Hall came from and how it works. <a href="https://haltingwinter.com/hwp_111/" target="_blank" rel="noopener">Listen to the episode</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="origins">
+  <div class="wrap">
+    <div class="section-label">Where It Started</div>
+    <h2>Two decades of meeting people where they are.</h2>
+
+    <div class="timeline">
+      <div class="tl">
+        <div class="where">Chicago</div>
+        <h3>Knocking on doors</h3>
+        <p>I started in Chicago politics and the City Council, where constituent service meant going to people, not waiting for them.</p>
+      </div>
+      <div class="tl">
+        <div class="where">Albert Lea, Minnesota</div>
+        <h3>Door-to-door as assistant city manager</h3>
+        <p>I learned the community by going door-to-door to hear resident and business concerns.</p>
+      </div>
+      <div class="tl">
+        <div class="where">West Linn, Oregon &middot; 2020</div>
+        <h3>Coffee with the city manager, mid-pandemic</h3>
+        <p>When in-person meetings weren't possible, I invited residents to informal video chats or socially distanced coffee. The coffee was on me.</p>
+      </div>
+      <div class="tl">
+        <div class="where">Beloit, Wisconsin &middot; 2023 to 2025</div>
+        <h3>Satellite City Hall</h3>
+        <p>The full program: recurring, publicized sessions across the city, eventually in partnership with Rock County.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how-it-travels">
+  <div class="wrap">
+    <div class="section-label">How It Travels</div>
+    <h2>Any city can do this.</h2>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="num">1</div>
+        <div>
+          <h3>Go where people already are</h3>
+          <p>Grocery stores and barbershops reach residents a public hearing never will.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="num">2</div>
+        <div>
+          <h3>Choose locations on purpose</h3>
+          <p>Rotate across neighborhoods and pick places that serve residents City Hall hears from least.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="num">3</div>
+        <div>
+          <h3>Make it useful on the spot</h3>
+          <p>Take service requests and route them, so residents see the conversation lead somewhere.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="num">4</div>
+        <div>
+          <h3>Bring partners to the table</h3>
+          <p>Residents don't sort their problems by level of government. Co-hosting with the county meant they didn't have to.</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="num">5</div>
+        <div>
+          <h3>Keep showing up</h3>
+          <p>Trust builds through repetition. The relationships came from the fifth Saturday, not the first.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      This is also why I care about AI in local government. Technology should recover time and reinvest it in community presence. Every hour AI saves on routine work is an hour a city leader can spend at the grocery store, the barbershop or the farmers' market. <a href="index.html#article">Read the article</a>
+    </div>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="wrap">
+    <div class="section-label">Coverage</div>
+    <ul class="sources">
+      <li><a href="https://www.wifr.com/2023/06/25/beloits-first-satellite-city-hall-piggly-wiggly/" target="_blank" rel="noopener">WIFR: Beloit's first Satellite City Hall at Piggly Wiggly</a> (June 2023)</li>
+      <li><a href="https://www.1059thehog.com/2023/06/23/beloit-city-manager-to-hold-satellite-city-hall-session/" target="_blank" rel="noopener">105.9 The Hog: Beloit City Manager to hold satellite city hall session</a> (June 2023)</li>
+      <li><a href="https://www.beloitdailynews.com/news/local-news/beloit-city-manager-holds-session-at-local-walgreens/article_31c45144-b899-11ee-be59-333d8cbf0b46.html" target="_blank" rel="noopener">Beloit Daily News: City Manager holds session at local Walgreens</a> (January 2024)</li>
+      <li><a href="https://www.beloitdailynews.com/opinion/removing-barriers-for-citizen-outreach/article_66a47db6-4cdd-11ef-aebc-636e7cbd1118.html" target="_blank" rel="noopener">Beloit Daily News editorial: Removing barriers for citizen outreach</a> (July 2024)</li>
+      <li><a href="https://downtownbeloit.com/us/2024/07/beloit-city-manager-to-host-satellite-city-hall/" target="_blank" rel="noopener">Downtown Beloit Association: Satellite City Hall at the Farmers' Market</a> (July 2024)</li>
+      <li><a href="https://www.beloitdailynews.com/news/local-news/next-satellite-city-hall-to-be-held-at-clippers-and-curls/article_fffe1c3c-5a49-11ef-a312-7b4124d759a0.html" target="_blank" rel="noopener">Beloit Daily News: Next Satellite City Hall at Clippers and Curls</a> (August 2024)</li>
+      <li><a href="https://www.1059thehog.com/2025/04/03/beloit-city-manager-hosts-satellite-city-hall-with-county-administrator/" target="_blank" rel="noopener">105.9 The Hog: Satellite City Hall with the County Administrator</a> (April 2025)</li>
+      <li><a href="https://www.beloitdailynews.com/news/local-news/city-manager-to-meet-with-residents-at-satellite-city-hall-saturday/article_7813d665-888d-4f3a-a451-79ff50ef4cb0.html" target="_blank" rel="noopener">Beloit Daily News: Satellite City Hall at the Hackett cleanup</a> (August 2025)</li>
+      <li><a href="https://westlinnoregon.gov/citymanager/meet-city-manager-1" target="_blank" rel="noopener">City of West Linn: Meet the City Manager</a> (2020)</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="footer-note">Jerry Gabrielatos &middot; <a href="index.html">jerrygabrielatos.com</a> &middot; <a href="mailto:jerry.gabrielatos@gmail.com">jerry.gabrielatos@gmail.com</a></div>
+  <div class="footer-note">Built with AI. All the thinking is mine.</div>
+</footer>
+
+</body>
+</html>
