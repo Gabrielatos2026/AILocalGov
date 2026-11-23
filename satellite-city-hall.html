@@ -71,7 +71,7 @@
   .quotes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 24px 0; }
   .q { border: 1px solid var(--line); border-radius: 8px; background: #fff; padding: 22px 22px 18px; display: flex; flex-direction: column; }
   .q blockquote { margin: 0 0 14px; font-size: 19px; line-height: 1.35; font-weight: 600; }
-  .q .src { margin-top: auto; font-size: 13px; color: var(--muted); }
+  .q .src { margin-top: 0; font-size: 13px; color: var(--muted); }
   .q.wide { grid-column: 1 / -1; }
   .quotes { grid-template-columns: repeat(3, 1fr); }
   .q blockquote { font-size: 18px; }
@@ -97,6 +97,7 @@
     display: flex; align-items: center; justify-content: center;
   }
   .listen .icon span { display: block; width: 0; height: 0; border-left: 18px solid #fff; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 5px; }
+  .listen .icon span.doc { border: none; width: 18px; height: 22px; margin: 0; background: #fff; border-radius: 2px; box-shadow: inset 0 -14px 0 -10px var(--accent), inset 0 -8px 0 -6px #fff; }
   .listen h3 { margin: 0 0 4px; font-size: 18px; }
   .listen p { margin: 0; font-size: 15px; }
 
@@ -266,7 +267,7 @@
     <div class="two-col">
       <div class="card">
         <h3>One-off service requests</h3>
-        <p>Potholes, trouble paying bills online, a problem on a specific block. Concerns I wouldn't have heard about if I hadn't set up the table, and that could be routed to staff right away.</p>
+        <p>Potholes, speeding, street resurfacing, trouble paying bills online, a problem on a specific block. Concerns I wouldn't have heard about if I hadn't set up the table, and that could be routed to staff right away.</p>
       </div>
       <div class="card">
         <h3>Long-term community issues</h3>
@@ -315,6 +316,14 @@
       <div>
         <h3>Hear it from me: "Bringing City Hall to Your Doorstep"</h3>
         <p>On Episode 111 of The HaltingWinter Podcast, a show for city managers and local leaders, I talked with host Seth Winterhalter about where Satellite City Hall came from and how it works. <a href="https://haltingwinter.com/hwp_111/" target="_blank" rel="noopener">Listen to the episode</a></p>
+      </div>
+    </div>
+
+    <div class="listen">
+      <div class="icon" aria-hidden="true"><span class="doc"></span></div>
+      <div>
+        <h3>Profiled in Community Playmaker</h3>
+        <p>In October 2025, Community Playmaker, a publication for local government leaders, profiled the program in "Satellite City Halls Bring Government To the People," covering how it works: no agenda, no time limit, and locations chosen to reach a diverse population. <a href="https://communityplaymaker.com/discoveries/satellite-city-halls-brings-government-to-the-people/" target="_blank" rel="noopener">Read the article</a></p>
       </div>
     </div>
   </div>
@@ -403,6 +412,7 @@
   <div class="wrap">
     <div class="section-label">Coverage</div>
     <ul class="sources">
+      <li><a href="https://communityplaymaker.com/discoveries/satellite-city-halls-brings-government-to-the-people/" target="_blank" rel="noopener">Community Playmaker: Satellite City Halls Bring Government To the People</a> (October 2025)</li>
       <li><a href="https://www.wifr.com/2023/06/25/beloits-first-satellite-city-hall-piggly-wiggly/" target="_blank" rel="noopener">WIFR: Beloit's first Satellite City Hall at Piggly Wiggly</a> (June 2023)</li>
       <li><a href="https://www.1059thehog.com/2023/06/23/beloit-city-manager-to-hold-satellite-city-hall-session/" target="_blank" rel="noopener">105.9 The Hog: Beloit City Manager to hold satellite city hall session</a> (June 2023)</li>
       <li><a href="https://www.beloitdailynews.com/news/local-news/beloit-city-manager-holds-session-at-local-walgreens/article_31c45144-b899-11ee-be59-333d8cbf0b46.html" target="_blank" rel="noopener">Beloit Daily News: City Manager holds session at local Walgreens</a> (January 2024)</li>
